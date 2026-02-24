@@ -25,7 +25,7 @@ const HeroSection = () => {
             transition={{ delay: 0.3 }}
             className="font-body text-sm tracking-[0.3em] uppercase text-primary mb-4"
           >
-            Diplômé en Philosophie · Juriste des droits humains (en formation) · Auteur · Acteur
+            Diplômé en Philosophie · Juriste des droits humains (en formation) · IA Maker Bootcamp (2026) · Auteur · Acteur
           </motion.p>
 
           <motion.h1

@@ -5,11 +5,11 @@ const timelineData = [
   { year: "2008", title: "Début au Festival de Théâtre REST d'Alexandre Atindoko à Abomey", category: "art" },
   { year: "2008-2010", title: "Prestations sur les scènes de Ayessi (ORTB) et Ablodé Gbadja (Canal 3)", category: "art" },
   { year: "2014", title: 'Acteur dans la série "Ministre" (ORTB/A+) et feuilleton Deutsche Welle', category: "art" },
-  { year: "2018", title: "Baccalauréat Série A1", category: "académique" },
+  { year: "2018", title: "Baccalauréat", category: "académique" },
   { year: "2019", title: "Institut de Théologie Saint-Gall de Ouidah · Finaliste national concours d'écriture", category: "académique" },
   { year: "2022", title: "Double licence en Philosophie (mention Excellente) — Institut Jean-Paul II & Université Pontificale Urbanienne", category: "académique" },
   { year: "2024", title: 'Publication de "Jusqu\'aux enfers…" (Éditions Savanes du Continent) · Master Chaire UNESCO', category: "publication" },
-  { year: "2024", title: "IA Maker Bootcamp — CREC, Godomey, Bénin", category: "académique" },
+  { year: "2026", title: "IA Maker Bootcamp — CREC, Godomey, Bénin", category: "académique" },
 ];
 
 const categoryColors: Record<string, string> = {
@@ -50,9 +50,8 @@ const ParcoursSection = () => {
               initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
-              className={`relative flex items-start mb-10 md:mb-8 ${
-                i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-              }`}
+              className={`relative flex items-start mb-10 md:mb-8 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                }`}
             >
               {/* Dot */}
               <div className="absolute left-[14px] md:left-1/2 md:-translate-x-1/2 top-1 z-10">
