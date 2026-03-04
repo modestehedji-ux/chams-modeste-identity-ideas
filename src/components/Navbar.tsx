@@ -1,28 +1,82 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon, Globe } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useTheme } from "@/hooks/use-theme";
+import { useI18n, uiStrings } from "@/hooks/use-i18n";
 
-const navItems = [
-  { label: "Accueil", href: "#accueil" },
-  { label: "À propos", href: "#apropos" },
-  { label: "Parcours", href: "#parcours" },
-  { label: "Publications", href: "#publications" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "#contact" },
+const navItemKeys = [
+  { key: "nav.home", href: "#accueil" },
+  { key: "nav.about", href: "#apropos" },
+  { key: "nav.parcours", href: "#parcours" },
+  { key: "nav.publications", href: "#publications" },
+  { key: "nav.blog", href: "/blog" },
+  { key: "nav.contact", href: "/contact" },
 ];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("accueil");
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const { theme, toggleTheme } = useTheme();
+  const { lang, setLang } = useI18n();
+
+  const navItems = navItemKeys.map((item) => ({
+    label: uiStrings[item.key][lang],
+    href: item.href,
+  }));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Track active section via IntersectionObserver on home page
+  useEffect(() => {
+    if (!isHome) return;
+    const sectionIds = navItems
+      .filter((item) => item.href.startsWith("#"))
+      .map((item) => item.href.slice(1));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        }
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [isHome]);
+
+  const isActive = (href: string) => {
+    if (href.startsWith("/")) {
+      return location.pathname === href || location.pathname.startsWith(href + "/");
+    }
+    // anchor links — only relevant on home page
+    if (isHome) {
+      return href === `#${activeSection}`;
+    }
+    return false;
+  };
+
+  const linkClass = (href: string) =>
+    `font-body text-sm tracking-widest uppercase transition-colors duration-300 ${
+      isActive(href)
+        ? "text-primary font-semibold"
+        : "text-muted-foreground hover:text-primary"
+    }`;
 
   return (
     <motion.nav
@@ -46,7 +100,7 @@ const Navbar = () => {
               <Link
                 key={item.href}
                 to={item.href}
-                className="font-body text-sm tracking-widest uppercase text-muted-foreground hover:text-primary transition-colors duration-300"
+                className={linkClass(item.href)}
               >
                 {item.label}
               </Link>
@@ -54,21 +108,52 @@ const Navbar = () => {
               <a
                 key={item.href}
                 href={isHome ? item.href : `/${item.href}`}
-                className="font-body text-sm tracking-widest uppercase text-muted-foreground hover:text-primary transition-colors duration-300"
+                className={linkClass(item.href)}
               >
                 {item.label}
               </a>
             )
           )}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-full text-muted-foreground hover:text-primary transition-colors duration-300"
+            aria-label="Changer de thème"
+          >
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+          <button
+            onClick={() => setLang(lang === "fr" ? "en" : "fr")}
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold text-muted-foreground hover:text-primary border border-border hover:border-primary transition-colors duration-300 uppercase"
+            aria-label="Changer de langue"
+          >
+            <Globe size={14} />
+            {lang === "fr" ? "EN" : "FR"}
+          </button>
         </div>
 
         {/* Mobile toggle */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-foreground"
-        >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <button
+            onClick={() => setLang(lang === "fr" ? "en" : "fr")}
+            className="inline-flex items-center gap-1 px-2 py-1.5 rounded-full text-xs font-semibold text-muted-foreground hover:text-primary border border-border hover:border-primary transition-colors duration-300 uppercase"
+          >
+            <Globe size={14} />
+            {lang === "fr" ? "EN" : "FR"}
+          </button>
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-full text-muted-foreground hover:text-primary transition-colors duration-300"
+            aria-label="Changer de thème"
+          >
+            {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="text-foreground"
+          >
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -87,7 +172,7 @@ const Navbar = () => {
                     key={item.href}
                     to={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className="font-body text-sm tracking-widest uppercase text-muted-foreground hover:text-primary transition-colors"
+                    className={linkClass(item.href)}
                   >
                     {item.label}
                   </Link>
@@ -96,7 +181,7 @@ const Navbar = () => {
                     key={item.href}
                     href={isHome ? item.href : `/${item.href}`}
                     onClick={() => setMobileOpen(false)}
-                    className="font-body text-sm tracking-widest uppercase text-muted-foreground hover:text-primary transition-colors"
+                    className={linkClass(item.href)}
                   >
                     {item.label}
                   </a>
