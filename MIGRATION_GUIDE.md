@@ -53,6 +53,27 @@ Tu devrais voir les nouvelles tables avec ces données :
 
 ---
 
+## Dépannage — Erreur "policy already exists"
+
+Si tu obtiens une erreur du type :
+
+```
+ERROR: policy "Public can read published articles" for table "articles" already exists (SQLSTATE 42710)
+```
+
+C'est parce que la table `articles` et ses policies existent déjà dans ta base distante.  
+La migration `001_initial_articles.sql` a été corrigée avec `DROP POLICY IF EXISTS` pour être rejouable.
+
+Pour forcer la ré-application, lance :
+
+```powershell
+npx supabase db push
+```
+
+Si l'erreur persiste, utilise la méthode alternative ci-dessous.
+
+---
+
 ## Alternative — SQL Editor
 
 Si le CLI ne fonctionne pas, tu peux copier-coller le contenu de `supabase/migrations/002_full_dynamic_i18n.sql` directement dans le **SQL Editor** du dashboard Supabase :
@@ -62,20 +83,3 @@ Si le CLI ne fonctionne pas, tu peux copier-coller le contenu de `supabase/migra
 3. Copie-colle tout le contenu du fichier SQL
 4. Clique **Run**
 5. Tu devrais voir "Success. No rows returned"
-
- npx supabase db push
-Initialising login role...
-Connecting to remote database...
-Do you want to push these migrations to the remote database?
- • 001_initial_articles.sql
- • 002_full_dynamic_i18n.sql
-
- [Y/n] Y
-Applying migration 001_initial_articles.sql...
-NOTICE (42P07): relation "articles" already exists, skipping
-ERROR: policy "Public can read published articles" for table "articles" already exists (SQLSTATE 42710)
-At statement: 2
-CREATE POLICY "Public can read published articles"
-  ON articles FOR SELECT
-  USING (published = true)
-Try rerunning the command with --debug to troubleshoot the error.

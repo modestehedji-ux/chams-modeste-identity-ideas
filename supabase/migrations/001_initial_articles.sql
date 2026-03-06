@@ -17,10 +17,12 @@ CREATE TABLE IF NOT EXISTS articles (
 
 ALTER TABLE articles ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Public can read published articles" ON articles;
 CREATE POLICY "Public can read published articles" 
   ON articles FOR SELECT 
   USING (published = true);
 
+DROP POLICY IF EXISTS "Admins have full access" ON articles;
 CREATE POLICY "Admins have full access" 
   ON articles FOR ALL 
   USING (auth.role() = 'authenticated')
