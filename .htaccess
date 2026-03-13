@@ -1,0 +1,50 @@
+# .htaccess pour héberger un SPA (Vite/React) sur Hostinger
+# - Redirection HTTPS
+# - Rewrite pour fallback vers index.html
+# - Compression et cache des assets
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Si vous déployez dans un sous-dossier, décommentez et ajustez la ligne suivante:
+  # RewriteBase /mon-sous-dossier/
+
+  # Forcer HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Ne pas réécrire si le fichier ou dossier existe
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Toutes les autres requêtes -> index.html (SPA)
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Compression (gzip/deflate)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# Caching: HTML non-cachable, assets statiques long terme
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/gif "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+</IfModule>
+
+# Sécurité: empêcher le sniffing de type MIME
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+</IfModule>
+
+# NOTE: Hostinger utilise Apache. Si vous avez des problèmes, assurez-vous
+# que le fichier .htaccess est bien placé à la racine publique (public_html)
+# et que les modules mod_rewrite, mod_deflate et mod_expires sont activés.
