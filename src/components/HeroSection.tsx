@@ -65,14 +65,13 @@ const HeroSection = () => {
             className="h-[2px] bg-gold-gradient mb-6"
           />
 
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.1 }}
-            className="body-lg text-secondary-foreground max-w-lg mb-8 leading-relaxed"
-          >
-            {description}
-          </motion.p>
+            className="prose prose-sm dark:prose-invert max-w-lg mb-8 prose-p:text-secondary-foreground prose-p:leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -47,17 +47,16 @@ const AboutSection = () => {
             className="space-y-6"
           >
             {about ? (
-              <>
-                <p className="body-lg text-secondary-foreground leading-relaxed">
-                  <strong className="text-foreground">{t(about.paragraph1_fr, about.paragraph1_en).split('.')[0]}.</strong>{t(about.paragraph1_fr, about.paragraph1_en).split('.').slice(1).join('.')}
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  {t(about.paragraph2_fr, about.paragraph2_en)}
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  {t(about.paragraph3_fr, about.paragraph3_en)}
-                </p>
-              </>
+              <div 
+                className="prose prose-sm sm:prose-base dark:prose-invert max-w-none prose-p:text-muted-foreground prose-p:leading-relaxed"
+                dangerouslySetInnerHTML={{ 
+                  __html: [
+                    t(about.paragraph1_fr, about.paragraph1_en),
+                    t(about.paragraph2_fr, about.paragraph2_en),
+                    t(about.paragraph3_fr, about.paragraph3_en)
+                  ].filter(Boolean).join('') 
+                }}
+              />
             ) : (
               <p className="text-muted-foreground">Chargement...</p>
             )}

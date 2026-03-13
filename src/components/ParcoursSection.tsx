@@ -59,7 +59,10 @@ const ParcoursSection = () => {
               {/* Content */}
               <div className={`ml-12 md:ml-0 md:w-[45%] ${i % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"}`}>
                 <span className="text-primary font-heading font-bold text-lg">{item.year}</span>
-                <p className="text-foreground mt-1 text-sm leading-relaxed">{t(item.title_fr, item.title_en)}</p>
+                <div 
+                  className="prose prose-sm dark:prose-invert prose-p:text-foreground prose-p:mt-1 prose-p:leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: t(item.title_fr, item.title_en) }}
+                />
               </div>
             </motion.div>
           ))}

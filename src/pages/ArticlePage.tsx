@@ -56,15 +56,10 @@ const ArticlePage = () => {
             </h1>
             <div className="h-[2px] w-16 bg-gold-gradient mb-8" />
 
-            <div className="prose-custom">
-              {article.content.split("\n").map((paragraph, i) =>
-                paragraph.trim() ? (
-                  <p key={i} className="text-muted-foreground leading-relaxed mb-4 text-[15px]">
-                    {paragraph}
-                  </p>
-                ) : null
-              )}
-            </div>
+            <div 
+              className="prose prose-sm sm:prose-base dark:prose-invert prose-headings:font-heading prose-headings:font-bold prose-p:text-muted-foreground prose-p:leading-relaxed max-w-none"
+              dangerouslySetInnerHTML={{ __html: article.content }}
+            />
           </motion.div>
         </div>
       </main>

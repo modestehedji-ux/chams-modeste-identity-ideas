@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Save, Plus, Trash2, Edit2, ArrowUp, ArrowDown } from "lucide-react";
+import { Save, Plus, Trash2, Edit2 } from "lucide-react";
 import { getAbout, updateAbout, getHighlights, createHighlight, updateHighlight, deleteHighlight, type AboutData, type Highlight } from "@/lib/content";
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { useToast } from "@/hooks/use-toast";
 
 const iconOptions = ["GraduationCap", "Scale", "Theater", "BookOpen", "FileText", "Pen", "Award", "Star", "Globe", "Heart"];
@@ -89,7 +90,15 @@ const AdminAbout = () => {
     <div>
       <label className="block text-xs font-body uppercase tracking-widest text-muted-foreground mb-2">{label}</label>
       {rows ? (
-        <textarea value={value} onChange={(e) => onChange(e.target.value)} rows={rows} className="w-full bg-secondary/50 border border-border rounded-sm px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary transition-colors resize-y" />
+        <div className="bg-card p-6 rounded-sm border border-border">
+          <label className="block text-xs font-body uppercase tracking-widest text-muted-foreground mb-4">
+            Texte de présentation
+          </label>
+          <RichTextEditor
+            content={value}
+            onChange={onChange}
+          />
+        </div>
       ) : (
         <input value={value} onChange={(e) => onChange(e.target.value)} className="w-full bg-secondary/50 border border-border rounded-sm px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary transition-colors" />
       )}
@@ -146,7 +155,7 @@ const AdminAbout = () => {
                 <button onClick={() => setEditingHighlight(h)} className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-sm transition-colors">
                   <Edit2 size={16} />
                 </button>
-                <button onClick={() => handleDeleteHighlight(h.id)} className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-sm transition-colors">
+                <button onClick={() => handleDeleteHighlight(h.id)} className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-sm transition-colors" title="Supprimer">
                   <Trash2 size={16} />
                 </button>
               </div>

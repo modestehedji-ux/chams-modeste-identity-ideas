@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Save } from "lucide-react";
 import { createArticle, updateArticle, getArticleById, getSession, type ArticleCategory } from "@/lib/articles";
 import { useToast } from "@/hooks/use-toast";
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 
 const categories: { value: ArticleCategory; label: string }[] = [
   { value: "reflexion", label: "Réflexion" },
@@ -150,13 +151,10 @@ const AdminEditor = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-body uppercase tracking-widest text-muted-foreground mb-2">Contenu</label>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              rows={14}
-              required
-              className="w-full bg-secondary/50 border border-border rounded-sm px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary transition-colors resize-y leading-relaxed"
+            <RichTextEditor
+              label="Contenu"
+              content={content}
+              onChange={setContent}
             />
           </div>
 

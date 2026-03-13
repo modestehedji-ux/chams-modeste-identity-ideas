@@ -51,7 +51,10 @@ const PublicationsSection = () => {
                 <div>
                   <span className="text-primary text-xs font-body uppercase tracking-widest">{t(pub.type_fr, pub.type_en)}</span>
                   <h3 className="font-heading font-semibold text-foreground mt-1">{t(pub.title_fr, pub.title_en)}</h3>
-                  <p className="text-muted-foreground text-sm mt-1">{t(pub.detail_fr, pub.detail_en)}</p>
+                  <div 
+                    className="prose prose-sm dark:prose-invert prose-p:text-muted-foreground prose-p:mt-1"
+                    dangerouslySetInnerHTML={{ __html: t(pub.detail_fr, pub.detail_en) }}
+                  />
                 </div>
               </motion.div>
             );

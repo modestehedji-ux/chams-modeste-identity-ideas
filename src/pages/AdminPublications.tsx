@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Plus, Edit2, Trash2, Save } from "lucide-react";
 import { getPublications, createPublication, updatePublication, deletePublication, type Publication } from "@/lib/content";
 import { useToast } from "@/hooks/use-toast";
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 
 const iconOptions = ["BookOpen", "FileText", "Pen", "Award", "Star", "GraduationCap"];
 
@@ -67,7 +68,12 @@ const AdminPublications = () => {
     <div>
       <label className="block text-xs font-body uppercase tracking-widest text-muted-foreground mb-2">{label}</label>
       {rows ? (
-        <textarea value={value} onChange={(e) => onChange(e.target.value)} rows={rows} className="w-full bg-secondary/50 border border-border rounded-sm px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary transition-colors resize-y" />
+        <div className="bg-card p-4 rounded-sm border border-border mt-1">
+          <RichTextEditor
+            content={value}
+            onChange={onChange}
+          />
+        </div>
       ) : (
         <input value={value} onChange={(e) => onChange(e.target.value)} className="w-full bg-secondary/50 border border-border rounded-sm px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary transition-colors" />
       )}

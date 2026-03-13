@@ -46,9 +46,10 @@ const ContactSection = () => {
             transition={{ delay: 0.2 }}
             className="space-y-6"
           >
-            <p className="text-muted-foreground leading-relaxed">
-              {info ? t(info.description_fr, info.description_en) : ""}
-            </p>
+            <div 
+              className="prose prose-sm dark:prose-invert prose-p:text-muted-foreground prose-p:leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: info ? t(info.description_fr, info.description_en) : "" }}
+            />
             <div className="flex items-center gap-3 text-foreground">
               <MapPin className="text-primary" size={18} />
               <span className="text-sm">{info ? t(info.location_fr, info.location_en) : ""}</span>
