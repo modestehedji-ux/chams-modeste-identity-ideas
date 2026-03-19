@@ -59,6 +59,7 @@ const Navbar = () => {
     });
 
     return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isHome]);
 
   const isActive = (href: string) => {
