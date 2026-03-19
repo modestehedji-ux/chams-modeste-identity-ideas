@@ -184,12 +184,25 @@ const HeroSection = () => {
             aspectRatio: "3/4",
             overflow: "hidden",
             borderRadius: "2px",
+            position: "relative",
           }}
         >
           <img
             src={heroPortrait}
             alt="Chams Modeste HEDJI"
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }}
+          />
+          {/* Effet de lumière blanchâtre en bas */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: "40%",
+              background: "linear-gradient(to top, #f4efe4, transparent)",
+              pointerEvents: "none",
+            }}
           />
         </motion.div>
       </div>
