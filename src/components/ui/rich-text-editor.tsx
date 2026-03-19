@@ -37,9 +37,6 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  if (!editor) {
-    return null;
-  }
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -64,11 +61,11 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 
       editor.chain().focus().setImage({ src: publicUrl }).run();
       toast({ title: "Image ajoutée avec succès" });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error uploading image:', error);
       toast({ 
         title: "Erreur lors de l'upload", 
-        description: error.message || "Impossible d'uploader l'image",
+        description: (error as Error).message || "Impossible d'uploader l'image",
         variant: "destructive"
       });
       
@@ -90,6 +87,10 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
   const addImageCallback = useCallback(() => {
     fileInputRef.current?.click();
   }, []);
+
+  if (!editor) {
+    return null;
+  }
 
   const ToolbarButton = ({
     onClick,
@@ -222,11 +223,11 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
          </select>
       </div>
 
-       <div className="flex items-center mx-1 relative" title="Couleur du texte">
+        <div className="flex items-center mx-1 relative" title="Couleur du texte">
           <Palette size={16} className="text-muted-foreground mr-1" />
           <input
              type="color"
-             onInput={(event: any) => editor.chain().focus().setColor(event.target.value).run()}
+             onInput={(event: React.ChangeEvent<HTMLInputElement>) => editor.chain().focus().setColor(event.target.value).run()}
              value={editor.getAttributes('textStyle').color || '#000000'}
              className="w-6 h-6 p-0 border-0 bg-transparent rounded-sm cursor-pointer"
           />

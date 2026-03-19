@@ -13,7 +13,7 @@ const ParcoursSection = () => {
   useEffect(() => {
     getParcours()
       .then((data) => {
-        let finalItems = [...data];
+        const finalItems = [...data];
         if (!finalItems.some((i) => i.title_fr.includes("UNESCO"))) {
           finalItems.push({
             id: "unesco",
