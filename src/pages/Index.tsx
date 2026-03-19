@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import StatsBar from "@/components/StatsBar";
 import ApercuOffres from "@/components/ApercuOffres";
 import AboutSection from "@/components/AboutSection";
 import ParcoursSection from "@/components/ParcoursSection";
@@ -12,7 +11,6 @@ const Index = () => {
     <div style={{ background: "#f4efe4" }}>
       <Navbar />
       <HeroSection />
-      <StatsBar />
       <ApercuOffres />
       <AboutSection />
       <ParcoursSection />

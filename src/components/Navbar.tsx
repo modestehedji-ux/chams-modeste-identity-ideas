@@ -90,7 +90,7 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-12 py-4">
         <a href="#accueil" className="font-heading text-xl md:text-2xl font-bold tracking-tight">
-          <span className="text-foreground">Chams M.</span>{" "}
+          <span className="text-foreground">Chams Modeste</span>{" "}
           <span className="text-primary">HEDJI</span>
         </a>
 

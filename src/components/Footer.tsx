@@ -31,7 +31,7 @@ const Footer = () => {
         {/* Brand */}
         <div>
           <p className="font-heading" style={{ fontSize: "1.3rem", color: "white", fontWeight: 600, marginBottom: "0.8rem" }}>
-            Chams M. <span style={{ color: "#b8922a" }}>HEDJI</span>
+            Chams Modeste <span style={{ color: "#b8922a" }}>HEDJI</span>
           </p>
           <p className="font-body" style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.8, marginBottom: "1rem" }}>
             Diplômé en Philosophie · Auteur · Juriste des droits humains (en formation)
