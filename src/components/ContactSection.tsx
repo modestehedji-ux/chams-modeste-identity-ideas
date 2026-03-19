@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Mail, MapPin, Send } from "lucide-react";
 import { getContactInfo, type ContactInfo } from "@/lib/content";
-import { useI18n, uiStrings } from "@/hooks/use-i18n";
+import { useI18n } from "@/hooks/use-i18n";
 
 const ContactSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [sent, setSent] = useState(false);
-  const { lang, t } = useI18n();
+  const { t } = useI18n();
   const [info, setInfo] = useState<ContactInfo | null>(null);
 
   useEffect(() => {
@@ -22,85 +21,171 @@ const ContactSection = () => {
     setTimeout(() => setSent(false), 3000);
   };
 
+  const infoItems = [
+    { label: "Email", value: info?.email || "modestehedji@gmail.com" },
+    { label: "Localisation", value: info ? t(info.location_fr, info.location_en) : "Cotonou, Bénin" },
+    { label: "LinkedIn", value: "Chams Modeste HEDJI" },
+    { label: "Réponse", value: "Sous 48 heures" },
+  ];
+
   return (
-    <section id="contact" className="section-padding" ref={ref}>
-      <div className="max-w-5xl mx-auto">
+    <section
+      id="contact"
+      style={{ background: "#f4efe4", padding: "5rem 4rem 4rem" }}
+      ref={ref}
+    >
+      <div
+        style={{
+          maxWidth: "1100px",
+          margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "5rem",
+          alignItems: "start",
+        }}
+        className="cnt-grid"
+      >
+        {/* Left: info */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
         >
-          <p className="font-body text-sm tracking-[0.3em] uppercase text-primary mb-3">
-            {uiStrings["contact.label"][lang]}
+          <span
+            className="font-body"
+            style={{ fontSize: "0.68rem", letterSpacing: "3px", color: "#b8922a", textTransform: "uppercase", fontWeight: 600, display: "block", marginBottom: "0.8rem" }}
+          >
+            Contact
+          </span>
+          <h1
+            className="font-heading"
+            style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", fontWeight: 700, color: "#1a1710", lineHeight: 1.1 }}
+          >
+            Démarrons<br />
+            <em style={{ color: "#b8922a", fontStyle: "italic" }}>la conversation</em>
+          </h1>
+          <div style={{ width: "40px", height: "2px", background: "#b8922a", margin: "1.5rem 0 2rem" }} />
+          <p className="font-body" style={{ fontSize: "0.93rem", color: "#555", lineHeight: 1.85, marginBottom: "1rem" }}>
+            Vous avez un projet, une idée, une question ? Écrivez-moi. Que ce soit pour une collaboration académique, une prestation numérique ou simplement pour échanger — je lis tous les messages et réponds sous 48h.
           </p>
-          <h2 className="heading-lg mb-4">
-            {uiStrings["contact.heading.1"][lang]} <span className="text-gradient-gold">{uiStrings["contact.heading.2"][lang]}</span>
-          </h2>
-          <div className="h-[2px] w-16 bg-gold-gradient mb-12" />
+
+          <div style={{ marginTop: "2rem" }}>
+            {infoItems.map((item, i) => (
+              <div
+                key={item.label}
+                className="font-body"
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "1rem",
+                  padding: "1rem 0",
+                  borderBottom: "0.5px solid #ede7d9",
+                  borderTop: i === 0 ? "0.5px solid #ede7d9" : "none",
+                }}
+              >
+                <span style={{ fontSize: "0.68rem", letterSpacing: "1.5px", textTransform: "uppercase", color: "#b8922a", fontWeight: 600, minWidth: "80px", paddingTop: "0.1rem" }}>
+                  {item.label}
+                </span>
+                <span style={{ fontSize: "0.88rem", color: "#1a1710", lineHeight: 1.5 }}>
+                  {item.label === "Email" ? (
+                    <a href={`mailto:${item.value}`} style={{ color: "#1a1710", textDecoration: "none" }}>{item.value}</a>
+                  ) : item.label === "LinkedIn" ? (
+                    <a href="https://www.linkedin.com/in/chams-modeste-hedji-49469426b/" target="_blank" rel="noopener noreferrer" style={{ color: "#1a1710", textDecoration: "none" }}>{item.value}</a>
+                  ) : item.value}
+                </span>
+              </div>
+            ))}
+          </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2 }}
-            className="space-y-6"
-          >
-            <div 
-              className="prose prose-sm dark:prose-invert prose-p:text-muted-foreground prose-p:leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: info ? t(info.description_fr, info.description_en) : "" }}
-            />
-            <div className="flex items-center gap-3 text-foreground">
-              <MapPin className="text-primary" size={18} />
-              <span className="text-sm">{info ? t(info.location_fr, info.location_en) : ""}</span>
+        {/* Right: form */}
+        <motion.form
+          onSubmit={handleSubmit}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}
+        >
+          {[
+            { label: "Votre nom", type: "text", placeholder: "Prénom et nom" },
+            { label: "Votre email", type: "email", placeholder: "votre@email.com" },
+          ].map(({ label, type, placeholder }) => (
+            <div key={label} style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              <label
+                className="font-body"
+                style={{ fontSize: "0.68rem", letterSpacing: "1.5px", textTransform: "uppercase", color: "#6b6560", fontWeight: 600 }}
+              >
+                {label}
+              </label>
+              <input
+                type={type}
+                placeholder={placeholder}
+                required
+                className="font-body"
+                style={{ background: "white", border: "0.5px solid #ede7d9", padding: "0.8rem 1rem", fontSize: "0.9rem", color: "#1a1710", outline: "none", width: "100%", transition: "border-color 0.2s" }}
+                onFocus={e => (e.currentTarget.style.borderColor = "#b8922a")}
+                onBlur={e => (e.currentTarget.style.borderColor = "#ede7d9")}
+              />
             </div>
-            <div className="flex items-center gap-3 text-foreground">
-              <Mail className="text-primary" size={18} />
-              <a href={`mailto:${info?.email || ""}`} className="text-sm hover:text-primary transition-colors">{info?.email}</a>
-            </div>
-            {info?.linkedin_url && (
-              <a href={info.linkedin_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
-                <svg className="text-primary" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                <span className="text-sm">LinkedIn</span>
-              </a>
-            )}
-          </motion.div>
+          ))}
 
-          <motion.form
-            onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.4 }}
-            className="space-y-4"
-          >
-            <input
-              type="text"
-              placeholder={uiStrings["contact.name"][lang]}
-              required
-              className="w-full bg-secondary/50 border border-border rounded-sm px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
-            />
-            <input
-              type="email"
-              placeholder={uiStrings["contact.email"][lang]}
-              required
-              className="w-full bg-secondary/50 border border-border rounded-sm px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
-            />
-            <textarea
-              rows={4}
-              placeholder={uiStrings["contact.message"][lang]}
-              required
-              className="w-full bg-secondary/50 border border-border rounded-sm px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors resize-none"
-            />
-            <button
-              type="submit"
-              className="inline-flex items-center gap-2 bg-gold-gradient text-primary-foreground font-body font-semibold px-8 py-3 rounded-sm tracking-wide text-sm uppercase hover:opacity-90 transition-opacity"
+          {/* Select */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+            <label className="font-body" style={{ fontSize: "0.68rem", letterSpacing: "1.5px", textTransform: "uppercase", color: "#6b6560", fontWeight: 600 }}>
+              Type de demande
+            </label>
+            <select
+              className="font-body"
+              style={{ background: "white", border: "0.5px solid #ede7d9", padding: "0.8rem 1rem", fontSize: "0.9rem", color: "#1a1710", outline: "none", width: "100%", transition: "border-color 0.2s" }}
+              onFocus={e => (e.currentTarget.style.borderColor = "#b8922a")}
+              onBlur={e => (e.currentTarget.style.borderColor = "#ede7d9")}
             >
-              {sent ? uiStrings["contact.sent"][lang] : uiStrings["contact.send"][lang]}
-              <Send size={14} />
-            </button>
-          </motion.form>
-        </div>
+              <option value="">Sélectionnez...</option>
+              <option>Collaboration académique / recherche</option>
+              <option>Services numériques (site, IA, automatisation)</option>
+              <option>Intervention / conférence</option>
+              <option>Création de contenu</option>
+              <option>Autre</option>
+            </select>
+          </div>
+
+          {/* Textarea */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+            <label className="font-body" style={{ fontSize: "0.68rem", letterSpacing: "1.5px", textTransform: "uppercase", color: "#6b6560", fontWeight: 600 }}>
+              Votre message
+            </label>
+            <textarea
+              rows={5}
+              placeholder="Décrivez votre projet ou votre besoin, même brièvement..."
+              required
+              className="font-body"
+              style={{ background: "white", border: "0.5px solid #ede7d9", padding: "0.8rem 1rem", fontSize: "0.9rem", color: "#1a1710", outline: "none", width: "100%", resize: "vertical", transition: "border-color 0.2s", minHeight: "130px" }}
+              onFocus={e => (e.currentTarget.style.borderColor = "#b8922a")}
+              onBlur={e => (e.currentTarget.style.borderColor = "#ede7d9")}
+            />
+          </div>
+
+          <p className="font-body" style={{ fontSize: "0.78rem", color: "#6b6560" }}>
+            Je lis chaque message personnellement et réponds sous 48 heures.
+          </p>
+
+          <a
+            href="mailto:modestehedji@gmail.com"
+            className="font-body"
+            style={{ background: "#b8922a", color: "white", padding: "0.85rem 2rem", fontSize: "0.72rem", letterSpacing: "2px", textTransform: "uppercase", fontWeight: 600, textDecoration: "none", display: "block", textAlign: "center", transition: "background 0.2s" }}
+            onMouseEnter={e => (e.currentTarget.style.background = "#8a6a1a")}
+            onMouseLeave={e => (e.currentTarget.style.background = "#b8922a")}
+          >
+            {sent ? "Message reçu ! ✓" : "Envoyer le message"}
+          </a>
+        </motion.form>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .cnt-grid { grid-template-columns: 1fr !important; gap: 2rem !important; padding: 3rem 1.5rem !important; }
+        }
+      `}</style>
     </section>
   );
 };

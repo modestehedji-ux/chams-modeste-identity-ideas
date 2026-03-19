@@ -1,67 +1,81 @@
 import { Link } from "react-router-dom";
-import { Mail, MapPin } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useI18n, uiStrings } from "@/hooks/use-i18n";
 
 const Footer = () => {
   const { lang } = useI18n();
 
   const quickLinks = [
-    { label: uiStrings["nav.home"][lang], href: "/" },
-    { label: uiStrings["nav.about"][lang], href: "/#apropos" },
-    { label: uiStrings["nav.parcours"][lang], href: "/#parcours" },
-    { label: uiStrings["nav.publications"][lang], href: "/#publications" },
-    { label: uiStrings["nav.blog"][lang], href: "/blog" },
-    { label: uiStrings["nav.contact"][lang], href: "/contact" },
+    { label: "Accueil", href: "/" },
+    { label: "À propos", href: "/#apropos" },
+    { label: "Parcours", href: "/#parcours" },
+    { label: "Publications", href: "/#publications" },
+    { label: "Services", href: "/services" },
+    { label: "Blog", href: "/blog" },
+    { label: "Contact", href: "/contact" },
   ];
 
   return (
-  <footer className="border-t border-border bg-secondary/30">
-    {/* Main footer content */}
-    <div className="max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-16">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 text-center md:text-left md:items-start md:justify-items-center">
+    <footer style={{ background: "#1a1710", padding: "3rem 4rem" }}>
+      <div
+        style={{
+          maxWidth: "1100px",
+          margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: "1.5fr 1fr 1fr",
+          gap: "3rem",
+          marginBottom: "2.5rem",
+        }}
+        className="footer-grid"
+      >
         {/* Brand */}
-        <div className="space-y-4 flex flex-col items-center md:items-start">
-          <p className="font-heading text-xl font-bold tracking-tight">
-            <span className="text-foreground">Chams M.</span>{" "}
-            <span className="text-primary">HEDJI</span>
+        <div>
+          <p className="font-heading" style={{ fontSize: "1.3rem", color: "white", fontWeight: 600, marginBottom: "0.8rem" }}>
+            Chams M. <span style={{ color: "#b8922a" }}>HEDJI</span>
           </p>
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="font-body" style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.8, marginBottom: "1rem" }}>
             Diplômé en Philosophie · Auteur · Juriste des droits humains (en formation)
           </p>
-          <div className="flex items-center justify-center md:justify-start gap-3 text-muted-foreground">
-            <MapPin className="text-primary shrink-0" size={16} />
-            <span className="text-sm">Cotonou, Bénin</span>
-          </div>
-          <div className="flex items-center justify-center md:justify-start gap-3 text-muted-foreground">
-            <Mail className="text-primary shrink-0" size={16} />
-            <a
-              href="mailto:modestehedji@gmail.com"
-              className="text-sm hover:text-primary transition-colors"
-            >
+          <div className="font-body" style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.35)", lineHeight: 2 }}>
+            <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "#b8922a", display: "inline-block" }} />
+              Cotonou, Bénin
+            </span>
+            <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "#b8922a", display: "inline-block" }} />
               modestehedji@gmail.com
-            </a>
+            </span>
           </div>
         </div>
 
         {/* Quick links */}
-        <div className="space-y-4 flex flex-col items-center md:items-start">
-          <h4 className="font-heading text-sm font-semibold uppercase tracking-widest text-foreground">
+        <div>
+          <h5
+            className="font-body"
+            style={{ fontSize: "0.65rem", letterSpacing: "2px", textTransform: "uppercase", color: "#b8922a", marginBottom: "1.2rem", fontWeight: 600 }}
+          >
             {uiStrings["footer.links"][lang]}
-          </h4>
-          <ul className="space-y-2">
+          </h5>
+          <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
             {quickLinks.map((link) => (
-              <li key={link.href}>
+              <li key={link.href} style={{ marginBottom: "0.7rem" }}>
                 {link.href.startsWith("/#") ? (
                   <a
                     href={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    className="font-body"
+                    style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.45)", textDecoration: "none", transition: "color 0.2s" }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "#b8922a")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
                   >
                     {link.label}
                   </a>
                 ) : (
                   <Link
                     to={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    className="font-body"
+                    style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.45)", textDecoration: "none", transition: "color 0.2s" }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "#b8922a")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
                   >
                     {link.label}
                   </Link>
@@ -71,47 +85,77 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Social / Réseaux */}
-        <div className="space-y-4 flex flex-col items-center md:items-start">
-          <h4 className="font-heading text-sm font-semibold uppercase tracking-widest text-foreground">
+        {/* Social */}
+        <div>
+          <h5
+            className="font-body"
+            style={{ fontSize: "0.65rem", letterSpacing: "2px", textTransform: "uppercase", color: "#b8922a", marginBottom: "1.2rem", fontWeight: 600 }}
+          >
             {uiStrings["footer.social"][lang]}
-          </h4>
-          <div className="flex flex-col gap-3">
+          </h5>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem" }}>
             <a
               href="https://www.linkedin.com/in/chams-modeste-hedji-49469426b/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
+              className="font-body"
+              style={{ display: "flex", alignItems: "center", gap: "0.6rem", fontSize: "0.84rem", color: "rgba(255,255,255,0.45)", textDecoration: "none", transition: "color 0.2s" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#b8922a")}
+              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
               </svg>
               LinkedIn
             </a>
             <a
               href="mailto:modestehedji@gmail.com"
-              className="inline-flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
+              className="font-body"
+              style={{ display: "flex", alignItems: "center", gap: "0.6rem", fontSize: "0.84rem", color: "rgba(255,255,255,0.45)", textDecoration: "none", transition: "color 0.2s" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#b8922a")}
+              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
             >
-              <Mail size={18} />
+              <Mail size={16} />
               Email
             </a>
           </div>
         </div>
       </div>
-    </div>
 
-    {/* Bottom bar */}
-    <div className="border-t border-border">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-5 flex flex-col md:flex-row items-center justify-between gap-3">
-        <p className="text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Chams Modeste <span className="text-primary font-medium">HEDJI</span>. {uiStrings["footer.rights"][lang]}
+      {/* Bottom */}
+      <div
+        style={{
+          maxWidth: "1100px",
+          margin: "0 auto",
+          borderTop: "0.5px solid rgba(255,255,255,0.08)",
+          paddingTop: "1.5rem",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: "0.5rem",
+        }}
+        className="footer-bottom"
+      >
+        <p className="font-body" style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.25)" }}>
+          © {new Date().getFullYear()} Chams Modeste{" "}
+          <Link to="/" style={{ color: "#b8922a", textDecoration: "none" }}>HEDJI</Link>. {uiStrings["footer.rights"][lang]}
         </p>
-        <p className="text-xs text-muted-foreground">
-          {uiStrings["footer.tagline"][lang]}
+        <p className="font-body" style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.25)" }}>
+          Conçu par Chams Modeste HEDJI
         </p>
       </div>
-    </div>
-  </footer>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .footer-grid { grid-template-columns: 1fr !important; padding: 0; }
+          footer { padding: 2rem 1.5rem !important; }
+          .footer-bottom { flex-direction: column; text-align: center; }
+        }
+      `}</style>
+    </footer>
   );
 };
 

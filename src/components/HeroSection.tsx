@@ -1,133 +1,212 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
 import heroPortrait from "@/assets/chams-portrait.jpg";
-import heroBg from "@/assets/hero-bg.jpg";
 import { getHero, type HeroData } from "@/lib/content";
-import { useI18n, uiStrings } from "@/hooks/use-i18n";
+import { useI18n } from "@/hooks/use-i18n";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
-  const { lang, t } = useI18n();
+  const { t } = useI18n();
   const [hero, setHero] = useState<HeroData | null>(null);
 
   useEffect(() => {
     getHero().then(setHero).catch(() => {});
   }, []);
 
-  // Fallbacks while loading or if DB is empty
   const title = hero ? t(hero.title_fr, hero.title_en) : "Chams Modeste HEDJI";
-  const subtitle = hero ? t(hero.subtitle_fr, hero.subtitle_en) : "";
-  const description = hero ? t(hero.description_fr, hero.description_en) : "";
+  const subtitle = hero
+    ? t(hero.subtitle_fr, hero.subtitle_en)
+    : "Juriste · Créateur numérique";
+  const description = hero
+    ? t(hero.description_fr, hero.description_en)
+    : "J'accompagne institutions, chercheurs et porteurs de projets dans la compréhension des enjeux identitaires africains à l'ère numérique — et dans leur transition vers l'intelligence artificielle.";
 
-  // Split title into first name and last name for styling
   const titleParts = title.split(" ");
-  const lastName = titleParts.pop() || "";
+  const lastName = titleParts.pop() || "HEDJI";
   const firstName = titleParts.join(" ");
 
   return (
     <section
       id="accueil"
-      className="relative min-h-screen flex items-center overflow-hidden"
+      style={{ background: "#f4efe4" }}
     >
-      {/* Background pattern */}
       <div
-        className="absolute inset-0 opacity-20"
-        style={{ backgroundImage: `url(${heroBg})`, backgroundSize: "cover", backgroundPosition: "center" }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/60" />
-
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-24 grid lg:grid-cols-2 gap-12 items-center pt-24">
-        {/* Text */}
-        <div>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="font-body text-sm tracking-[0.3em] uppercase text-primary mb-4"
+        style={{
+          maxWidth: "1100px",
+          margin: "0 auto",
+          padding: "6rem 4rem 4rem",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "4rem",
+          alignItems: "center",
+        }}
+        className="hero-grid"
+      >
+        {/* Left — Text */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          <p
+            className="font-body"
+            style={{
+              fontSize: "0.68rem",
+              letterSpacing: "3px",
+              color: "#b8922a",
+              textTransform: "uppercase",
+              fontWeight: 600,
+              marginBottom: "0.8rem",
+            }}
           >
             {subtitle}
-          </motion.p>
+          </p>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="heading-xl mb-6"
+          <h1
+            className="font-heading"
+            style={{
+              fontSize: "clamp(3rem, 5vw, 4.5rem)",
+              lineHeight: 1.0,
+              fontWeight: 700,
+              color: "#1a1710",
+              marginBottom: 0,
+            }}
           >
-            {firstName}{" "}
-            <span className="text-gradient-gold">{lastName}</span>
-          </motion.h1>
+            {firstName}
+          </h1>
+          <h1
+            className="font-heading"
+            style={{
+              fontSize: "clamp(3rem, 5vw, 4.5rem)",
+              lineHeight: 1.0,
+              fontWeight: 700,
+              color: "#b8922a",
+              marginBottom: 0,
+            }}
+          >
+            {lastName}
+          </h1>
 
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: 80 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
-            className="h-[2px] bg-gold-gradient mb-6"
+          <div
+            style={{
+              width: "40px",
+              height: "2px",
+              background: "#b8922a",
+              margin: "1.5rem 0",
+            }}
           />
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1 }}
-            className="prose prose-sm dark:prose-invert max-w-lg mb-8 prose-p:text-secondary-foreground prose-p:leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: description }}
+          <div
+            className="font-body"
+            style={{ fontSize: "0.95rem", color: "#444", lineHeight: 1.9, marginBottom: "0.8rem" }}
+            dangerouslySetInnerHTML={{
+              __html: `<strong style="color:#1a1710;">À l'intersection de la pensée critique et de l'action concrète.</strong>`,
+            }}
           />
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3 }}
-            className="flex gap-4 flex-wrap"
+          <p
+            className="font-body"
+            style={{
+              fontSize: "0.92rem",
+              color: "#555",
+              lineHeight: 1.85,
+              marginBottom: "1.8rem",
+            }}
           >
+            {description}
+          </p>
+
+          <p
+            className="font-heading"
+            style={{
+              fontSize: "1.05rem",
+              fontStyle: "italic",
+              color: "#8a6a1a",
+              marginBottom: "2rem",
+            }}
+          >
+            « Penser le monde, mais aussi le transformer. »
+          </p>
+
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+            <Link
+              to="/services"
+              className="font-body"
+              style={{
+                background: "#b8922a",
+                color: "white",
+                padding: "0.85rem 2rem",
+                fontSize: "0.72rem",
+                letterSpacing: "2px",
+                textTransform: "uppercase",
+                fontWeight: 600,
+                textDecoration: "none",
+                display: "inline-block",
+                transition: "background 0.2s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#8a6a1a")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#b8922a")}
+            >
+              Travailler ensemble
+            </Link>
             <a
               href="#apropos"
-              className="inline-flex items-center gap-2 bg-gold-gradient text-primary-foreground font-body font-semibold px-8 py-3 rounded-sm tracking-wide text-sm uppercase hover:opacity-90 transition-opacity"
+              className="font-body"
+              style={{
+                background: "transparent",
+                color: "#1a1710",
+                padding: "0.85rem 2rem",
+                fontSize: "0.72rem",
+                letterSpacing: "2px",
+                textTransform: "uppercase",
+                fontWeight: 600,
+                border: "1.5px solid #1a1710",
+                textDecoration: "none",
+                display: "inline-block",
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#1a1710";
+                e.currentTarget.style.color = "white";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = "#1a1710";
+              }}
             >
-              {uiStrings["hero.discover"][lang]}
+              Découvrir mon travail
             </a>
-            <a
-              href="/contact"
-              className="inline-flex items-center gap-2 border border-primary text-primary font-body font-semibold px-8 py-3 rounded-sm tracking-wide text-sm uppercase hover:bg-primary hover:text-primary-foreground transition-colors"
-            >
-              {uiStrings["hero.contact"][lang]}
-            </a>
-          </motion.div>
-        </div>
-
-        {/* Portrait */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.6, duration: 1 }}
-          className="hidden lg:flex justify-end"
-        >
-          <div className="relative">
-            <div className="absolute -inset-4 border border-primary/30 rounded-sm" />
-            <div className="absolute -inset-8 border border-primary/10 rounded-sm" />
-            <img
-              src={heroPortrait}
-              alt={title}
-              className="relative w-[420px] h-[520px] object-cover object-top rounded-sm"
-            />
-            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
           </div>
+        </motion.div>
+
+        {/* Right — Photo */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          style={{
+            width: "100%",
+            aspectRatio: "3/4",
+            overflow: "hidden",
+            borderRadius: "2px",
+          }}
+        >
+          <img
+            src={heroPortrait}
+            alt="Chams Modeste HEDJI"
+            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }}
+          />
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-        >
-          <ArrowDown className="text-primary" size={20} />
-        </motion.div>
-      </motion.div>
+      <style>{`
+        @media (max-width: 768px) {
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+            padding: 3rem 1.5rem 2rem !important;
+            gap: 2rem !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };

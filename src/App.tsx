@@ -19,6 +19,7 @@ import AdminEditor from "./pages/AdminEditor";
 import AdminContact from "./pages/AdminContact";
 import AdminSettings from "./pages/AdminSettings";
 import Contact from "./pages/Contact";
+import ServicesPage from "./pages/ServicesPage";
 import ScrollToTop from "./components/ScrollToTop";
 import NotFound from "./pages/NotFound";
 
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/services" element={<ServicesPage />} />
             <Route path="/blog/:slug" element={<ArticlePage />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminLayout />}>

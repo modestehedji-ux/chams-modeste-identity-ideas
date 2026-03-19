@@ -27,77 +27,132 @@ const Blog = () => {
   const articles = allArticles.filter((a) => filter === "all" || a.category === filter);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div style={{ background: "#f4efe4", minHeight: "100vh" }}>
       <Navbar />
-      <main className="pt-28 pb-16 px-6 md:px-12">
-        <div className="max-w-5xl mx-auto">
+
+      <main style={{ paddingTop: "7rem" }}>
+        {/* Header */}
+        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "2rem 4rem 3rem" }} className="blog-header-pad">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <p className="font-body text-sm tracking-[0.3em] uppercase text-primary mb-3">Blog</p>
-            <h1 className="heading-lg mb-4">
-              Écrits & <span className="text-gradient-gold">réflexions</span>
+            <span
+              className="font-body"
+              style={{ fontSize: "0.68rem", letterSpacing: "3px", color: "#b8922a", textTransform: "uppercase", fontWeight: 600, display: "block", marginBottom: "0.8rem" }}
+            >
+              Blog
+            </span>
+            <h1 className="font-heading" style={{ fontSize: "clamp(2.2rem, 4vw, 3.5rem)", fontWeight: 700, color: "#1a1710", lineHeight: 1.1 }}>
+              Écrits &amp; <em style={{ color: "#b8922a", fontStyle: "italic" }}>réflexions</em>
             </h1>
-            <div className="h-[2px] w-16 bg-gold-gradient mb-8" />
-          </motion.div>
+            <div style={{ width: "40px", height: "2px", background: "#b8922a", margin: "1.5rem 0 2rem" }} />
 
-          {/* Filters */}
-          <div className="flex flex-wrap gap-2 mb-10">
-            {filterTabs.map((tab) => (
-              <button
-                key={tab.value}
-                onClick={() => setFilter(tab.value)}
-                className={`font-body text-xs uppercase tracking-widest px-4 py-2 rounded-sm border transition-colors ${filter === tab.value
-                    ? "border-primary text-primary bg-primary/10"
-                    : "border-border text-muted-foreground hover:text-primary hover:border-primary/40"
-                  }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Articles */}
-          <div className="grid gap-6">
-            {loading && (
-              <p className="text-muted-foreground text-center py-12">Chargement des articles...</p>
-            )}
-            {!loading && articles.length === 0 && (
-              <p className="text-muted-foreground text-center py-12">Aucun article dans cette catégorie.</p>
-            )}
-            {articles.map((article, i) => (
-              <motion.div
-                key={article.id}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.08 }}
-              >
-                <Link
-                  to={`/blog/${article.slug}`}
-                  className="group block p-6 md:p-8 bg-card border border-border rounded-sm hover:border-primary/40 transition-all duration-300"
+            {/* Filters */}
+            <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap", marginBottom: "3rem" }}>
+              {filterTabs.map((tab) => (
+                <button
+                  key={tab.value}
+                  onClick={() => setFilter(tab.value)}
+                  className="font-body"
+                  style={{
+                    fontSize: "0.7rem",
+                    letterSpacing: "1.5px",
+                    textTransform: "uppercase",
+                    fontWeight: 600,
+                    padding: "0.45rem 1rem",
+                    border: filter === tab.value ? "0.5px solid #b8922a" : "0.5px solid #ede7d9",
+                    background: "white",
+                    color: filter === tab.value ? "#b8922a" : "#6b6560",
+                    cursor: "pointer",
+                    transition: "all 0.2s",
+                  }}
+                  onMouseEnter={e => {
+                    if (filter !== tab.value) {
+                      e.currentTarget.style.borderColor = "#b8922a";
+                      e.currentTarget.style.color = "#b8922a";
+                    }
+                  }}
+                  onMouseLeave={e => {
+                    if (filter !== tab.value) {
+                      e.currentTarget.style.borderColor = "#ede7d9";
+                      e.currentTarget.style.color = "#6b6560";
+                    }
+                  }}
                 >
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-xs font-body uppercase tracking-widest text-primary">
-                      {getCategoryLabel(article.category)}
-                    </span>
-                    <span className="text-border">·</span>
-                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                      <Calendar size={12} />
-                      {new Date(article.created_at).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
-                    </span>
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Articles list */}
+        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 4rem 4rem" }} className="blog-list-pad">
+          {loading && (
+            <p className="font-body" style={{ color: "#6b6560", textAlign: "center", padding: "3rem 0" }}>Chargement des articles...</p>
+          )}
+          {!loading && articles.length === 0 && (
+            <p className="font-body" style={{ color: "#6b6560", textAlign: "center", padding: "3rem 0" }}>Aucun article dans cette catégorie.</p>
+          )}
+
+          {articles.map((article, i) => (
+            <motion.div
+              key={article.id}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.08 }}
+            >
+              <Link
+                to={`/blog/${article.slug}`}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "160px 1fr",
+                  gap: "2.5rem",
+                  padding: "2.5rem 0",
+                  borderTop: "0.5px solid #ede7d9",
+                  textDecoration: "none",
+                  alignItems: "start",
+                }}
+                className="blog-article-row"
+              >
+                {/* Date + cat */}
+                <div>
+                  <div className="font-heading" style={{ fontSize: "0.95rem", color: "#6b6560", lineHeight: 1.5 }}>
+                    {new Date(article.created_at).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
                   </div>
-                  <h2 className="font-heading text-xl font-bold text-foreground group-hover:text-primary transition-colors mb-2">
+                  <span className="font-body" style={{ fontSize: "0.62rem", letterSpacing: "1.5px", textTransform: "uppercase", color: "#b8922a", fontWeight: 600, display: "block", marginTop: "0.3rem" }}>
+                    {getCategoryLabel(article.category)}
+                  </span>
+                </div>
+
+                {/* Content */}
+                <div>
+                  <h2 className="font-heading" style={{ fontSize: "1.5rem", fontWeight: 700, color: "#1a1710", marginBottom: "0.5rem", lineHeight: 1.25 }}>
                     {article.title}
                   </h2>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">{article.excerpt}</p>
-                  <span className="inline-flex items-center gap-1 text-primary text-xs font-body uppercase tracking-widest group-hover:gap-2 transition-all">
-                    Lire la suite <ArrowRight size={14} />
+                  <p className="font-body" style={{ fontSize: "0.88rem", color: "#6b6560", lineHeight: 1.75, marginBottom: "1rem" }}>
+                    {article.excerpt}
+                  </p>
+                  <span
+                    className="font-body"
+                    style={{ fontSize: "0.72rem", letterSpacing: "1.5px", textTransform: "uppercase", color: "#b8922a", textDecoration: "none", fontWeight: 600, borderBottom: "0.5px solid #b8922a", paddingBottom: "1px", display: "inline-flex", alignItems: "center", gap: "4px" }}
+                  >
+                    Lire la suite <ArrowRight size={12} />
                   </span>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+          {articles.length > 0 && <div style={{ borderBottom: "0.5px solid #ede7d9" }} />}
         </div>
       </main>
+
       <Footer />
+
+      <style>{`
+        @media (max-width: 768px) {
+          .blog-header-pad, .blog-list-pad { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+          .blog-article-row { grid-template-columns: 1fr !important; gap: 0.8rem !important; }
+        }
+      `}</style>
     </div>
   );
 };

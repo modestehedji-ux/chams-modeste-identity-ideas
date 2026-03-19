@@ -10,6 +10,7 @@ const navItemKeys = [
   { key: "nav.about", href: "#apropos" },
   { key: "nav.parcours", href: "#parcours" },
   { key: "nav.publications", href: "#publications" },
+  { key: "nav.services", href: "/services" },
   { key: "nav.blog", href: "/blog" },
   { key: "nav.contact", href: "/contact" },
 ];

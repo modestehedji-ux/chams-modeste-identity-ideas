@@ -57,6 +57,7 @@ export const uiStrings: Record<string, Record<Lang, string>> = {
   "nav.about": { fr: "À propos", en: "About" },
   "nav.parcours": { fr: "Parcours", en: "Journey" },
   "nav.publications": { fr: "Publications", en: "Publications" },
+  "nav.services": { fr: "Services", en: "Services" },
   "nav.blog": { fr: "Blog", en: "Blog" },
   "nav.contact": { fr: "Contact", en: "Contact" },
 
@@ -93,7 +94,6 @@ export const uiStrings: Record<string, Record<Lang, string>> = {
   "footer.links": { fr: "Liens rapides", en: "Quick links" },
   "footer.social": { fr: "Réseaux sociaux", en: "Social networks" },
   "footer.rights": { fr: "Tous droits réservés.", en: "All rights reserved." },
-  "footer.tagline": { fr: "Conçu avec passion depuis Cotonou.", en: "Crafted with passion from Cotonou." },
 
   // Blog
   "blog.readMore": { fr: "Lire la suite", en: "Read more" },
