@@ -11,7 +11,34 @@ const ParcoursSection = () => {
   const [items, setItems] = useState<ParcoursItem[]>([]);
 
   useEffect(() => {
-    getParcours().then(setItems).catch(() => {});
+    getParcours()
+      .then((data) => {
+        let finalItems = [...data];
+        if (!finalItems.some((i) => i.title_fr.includes("UNESCO"))) {
+          finalItems.push({
+            id: "unesco",
+            year: "2025-2026",
+            title_fr: "Master UNESCO",
+            title_en: "UNESCO Master",
+            category: "education",
+            sort_order: 998,
+            created_at: new Date().toISOString(),
+          });
+        }
+        if (!finalItems.some((i) => i.title_fr.includes("IA"))) {
+          finalItems.push({
+            id: "ia-web",
+            year: "2024+",
+            title_fr: "Services IA & Web",
+            title_en: "AI & Web Services",
+            category: "work",
+            sort_order: 999,
+            created_at: new Date().toISOString(),
+          });
+        }
+        setItems(finalItems.sort((a, b) => a.sort_order - b.sort_order));
+      })
+      .catch(() => {});
   }, []);
 
   return (

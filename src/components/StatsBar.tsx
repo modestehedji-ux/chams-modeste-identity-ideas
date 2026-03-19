@@ -1,7 +1,6 @@
 const stats = [
-  { num: "5+", label: "Publications & écrits" },
+  { num: "5+", label: "Publications" },
   { num: "1", label: "Mémoire de fin de cycle Philosophie" },
-  { num: "15+", label: "Années d'engagement culturel" },
   { num: "3", label: "Domaines d'expertise" },
 ];
 
