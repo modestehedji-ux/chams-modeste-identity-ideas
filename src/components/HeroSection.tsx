@@ -35,6 +35,7 @@ const HeroSection = () => {
           gridTemplateColumns: "1fr 1fr",
           gap: "4rem",
           alignItems: "center",
+          border: "20px solid red",
         }}
         className="hero-grid"
       >
