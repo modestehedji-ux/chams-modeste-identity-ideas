@@ -54,8 +54,7 @@ const AboutSection = () => {
             className="font-heading"
             style={{ fontSize: "clamp(2.2rem, 4vw, 3.5rem)", fontWeight: 700, color: "#1a1710", lineHeight: 1.1, marginBottom: "0.2rem" }}
           >
-            Un regard neuf sur{" "}
-            <em style={{ color: "#b8922a", fontStyle: "italic" }}>l'Afrique contemporaine</em>
+            {about ? t(about.heading_fr, about.heading_en) : uiStrings["about.label"][lang]}
           </h1>
           <div style={{ width: "40px", height: "2px", background: "#b8922a", margin: "1.5rem 0 3rem" }} />
         </motion.div>
@@ -100,7 +99,7 @@ const AboutSection = () => {
                 className="font-heading"
                 style={{ fontSize: "1.15rem", fontStyle: "italic", color: "#1a1710", lineHeight: 1.6 }}
               >
-                « Penser le monde, mais aussi le transformer. »
+                {about ? t(about.paragraph3_fr, about.paragraph3_en) : ""}
               </p>
             </div>
           </motion.div>

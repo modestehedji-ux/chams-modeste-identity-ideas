@@ -24,7 +24,7 @@ const ContactSection = () => {
   const infoItems = [
     { label: "Email", value: info?.email || "modestehedji@gmail.com" },
     { label: "Localisation", value: info ? t(info.location_fr, info.location_en) : "Cotonou, Bénin" },
-    { label: "LinkedIn", value: "Chams Modeste HEDJI" },
+    { label: "LinkedIn", value: info?.linkedin_url || "Chams Modeste HEDJI" },
     { label: "Réponse", value: "Sous 48 heures" },
   ];
 
@@ -66,7 +66,7 @@ const ContactSection = () => {
           </h1>
           <div style={{ width: "40px", height: "2px", background: "#b8922a", margin: "1.5rem 0 2rem" }} />
           <p className="font-body" style={{ fontSize: "0.93rem", color: "#555", lineHeight: 1.85, marginBottom: "1rem" }}>
-            Vous avez un projet, une idée, une question ? Écrivez-moi. Que ce soit pour une collaboration académique, une prestation numérique ou simplement pour échanger — je lis tous les messages et réponds sous 48h.
+            {info ? t(info.description_fr, info.description_en) : ""}
           </p>
 
           <div style={{ marginTop: "2rem" }}>
