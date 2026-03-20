@@ -14,8 +14,8 @@ const HeroSection = () => {
   }, []);
 
   const title = hero ? t(hero.title_fr, hero.title_en) : "Chams Modeste HEDJI";
-  const subtitle = "PHILOSOPHIE · DROITS HUMAINS · CRÉATION NUMÉRIQUE";
-  const description = "J'accompagne institutions, chercheurs et porteurs de projets dans la compréhension des enjeux identitaires africains à l'ère numérique — et dans leur transition vers l'intelligence artificielle.";
+  const subtitle = hero ? t(hero.subtitle_fr, hero.subtitle_en) : "PHILOSOPHIE · DROITS HUMAINS · CRÉATION NUMÉRIQUE";
+  const description = hero ? t(hero.description_fr, hero.description_en) : "J'accompagne institutions, chercheurs et porteurs de projets dans la compréhension des enjeux identitaires africains à l'ère numérique — et dans leur transition vers l'intelligence artificielle.";
 
   const titleParts = title.split(" ");
   const lastName = titleParts.pop() || "HEDJI";
