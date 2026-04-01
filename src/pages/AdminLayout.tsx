@@ -3,9 +3,11 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, Globe, LogOut, FileText, Route as RouteIcon,
-  BookOpen, User, Phone, Settings, Menu, X, ChevronRight,
+  BookOpen, User, Phone, Settings, Menu, X, ChevronRight, Sun, Moon
 } from "lucide-react";
 import { logout, getSession } from "@/lib/articles";
+import { useTheme } from "next-themes";
+import { useI18n } from "@/hooks/use-i18n";
 
 interface NavItem {
   label: string;
@@ -44,6 +46,8 @@ const AdminLayout = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const { lang, setLang } = useI18n();
 
   useEffect(() => {
     getSession().then((session) => {
@@ -185,6 +189,22 @@ const AdminLayout = () => {
             </h1>
           </div>
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => setLang(lang === "fr" ? "en" : "fr")}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold text-muted-foreground hover:text-primary border border-border hover:border-primary transition-colors duration-300 uppercase"
+              aria-label="Changer de langue"
+            >
+              <Globe size={14} />
+              {lang === "fr" ? "EN" : "FR"}
+            </button>
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="p-2 rounded-full text-muted-foreground hover:text-primary transition-colors duration-300"
+              aria-label="Changer de thème"
+            >
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+            <div className="w-px h-6 bg-border mx-1 hidden lg:block" />
             <button
               onClick={handleLogout}
               className="lg:hidden text-muted-foreground hover:text-destructive transition-colors"

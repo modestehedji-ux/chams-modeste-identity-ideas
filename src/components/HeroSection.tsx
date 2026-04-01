@@ -1,17 +1,16 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import heroPortrait from "@/assets/chams-portrait.jpg";
-import { getHero, type HeroData } from "@/lib/content";
-import { useI18n } from "@/hooks/use-i18n";
+import { getHero } from "@/lib/content";
+import { useI18n, uiStrings } from "@/hooks/use-i18n";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 const HeroSection = () => {
-  const { t } = useI18n();
-  const [hero, setHero] = useState<HeroData | null>(null);
-
-  useEffect(() => {
-    getHero().then(setHero).catch(() => {});
-  }, []);
+  const { t, lang } = useI18n();
+  const { data: hero } = useQuery({
+    queryKey: ["hero"],
+    queryFn: getHero,
+  });
 
   const title = hero ? t(hero.title_fr, hero.title_en) : "Chams Modeste HEDJI";
   const subtitle = hero ? t(hero.subtitle_fr, hero.subtitle_en) : "";
@@ -22,154 +21,54 @@ const HeroSection = () => {
   const firstName = titleParts.join(" ");
 
   return (
-    <section
-      id="accueil"
-      style={{ background: "#f4efe4" }}
-    >
-      <div
-        style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
-          padding: "6rem 4rem 4rem",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "4rem",
-          alignItems: "center",
-        }}
-        className="hero-grid"
-      >
+    <section id="accueil" className="bg-background pt-24 pb-16 md:pt-32 md:pb-20 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-12 md:gap-24 items-center">
         {/* Left — Text */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
+          className="relative z-10"
         >
-          <p
-            className="font-body"
-            style={{
-              fontSize: "0.68rem",
-              letterSpacing: "3px",
-              color: "#b8922a",
-              textTransform: "uppercase",
-              fontWeight: 600,
-              marginBottom: "0.8rem",
-            }}
-          >
+          <p className="font-body text-[0.68rem] tracking-[3px] text-primary uppercase font-semibold mb-3">
             {subtitle}
           </p>
 
-          <h1
-            className="font-heading"
-            style={{
-              fontSize: "clamp(3rem, 5vw, 4.5rem)",
-              lineHeight: 1.0,
-              fontWeight: 700,
-              color: "#1a1710",
-              marginBottom: 0,
-            }}
-          >
+          <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl leading-tight font-bold text-foreground mb-0">
             {firstName}
           </h1>
-          <h1
-            className="font-heading"
-            style={{
-              fontSize: "clamp(3rem, 5vw, 4.5rem)",
-              lineHeight: 1.0,
-              fontWeight: 700,
-              color: "#b8922a",
-              marginBottom: 0,
-            }}
-          >
+          <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl leading-tight font-bold text-primary mb-0">
             {lastName}
           </h1>
 
-          <div
-            style={{
-              width: "40px",
-              height: "2px",
-              background: "#b8922a",
-              margin: "1.5rem 0",
-            }}
-          />
+          <div className="w-10 h-[2px] bg-primary my-6 md:my-8" />
 
           <div
-            className="font-body"
-            style={{ fontSize: "0.95rem", color: "#444", lineHeight: 1.9, marginBottom: "0.8rem" }}
+            className="font-body text-base md:text-lg text-foreground/90 leading-relaxed mb-4"
             dangerouslySetInnerHTML={{
-              __html: `<strong style="color:#1a1710;">À l'intersection de la pensée critique et de l'action concrète.</strong>`,
+              __html: `<strong class="text-foreground">${uiStrings["hero.intersection"][lang]}</strong>`,
             }}
           />
-          <p
-            className="font-body"
-            style={{
-              fontSize: "0.92rem",
-              color: "#555",
-              lineHeight: 1.85,
-              marginBottom: "1.8rem",
-            }}
-          >
+          <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed mb-8">
             {description}
           </p>
 
-          <p
-            className="font-heading"
-            style={{
-              fontSize: "1.05rem",
-              fontStyle: "italic",
-              color: "#8a6a1a",
-              marginBottom: "2rem",
-            }}
-          >
-            « Penser le monde, mais aussi le transformer. »
+          <p className="font-heading text-lg md:text-xl italic text-primary/80 mb-10">
+            {uiStrings["hero.quote"][lang]}
           </p>
 
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+          <div className="flex flex-wrap gap-4">
             <Link
               to="/services"
-              className="font-body"
-              style={{
-                background: "#b8922a",
-                color: "white",
-                padding: "0.85rem 2rem",
-                fontSize: "0.72rem",
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-                fontWeight: 600,
-                textDecoration: "none",
-                display: "inline-block",
-                transition: "background 0.2s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#8a6a1a")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#b8922a")}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-[0.7rem] tracking-[2px] uppercase font-semibold rounded-sm transition-all duration-300 shadow-sm"
             >
-              Travailler ensemble
+              {uiStrings["hero.cta.work"][lang]}
             </Link>
             <a
               href="#apropos"
-              className="font-body"
-              style={{
-                background: "transparent",
-                color: "#1a1710",
-                padding: "0.85rem 2rem",
-                fontSize: "0.72rem",
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-                fontWeight: 600,
-                border: "1.5px solid #1a1710",
-                textDecoration: "none",
-                display: "inline-block",
-                transition: "all 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#1a1710";
-                e.currentTarget.style.color = "white";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = "#1a1710";
-              }}
+              className="bg-transparent border border-foreground hover:bg-foreground hover:text-background px-8 py-4 text-[0.7rem] tracking-[2px] uppercase font-semibold rounded-sm transition-all duration-300"
             >
-              Découvrir mon travail
+              {uiStrings["hero.cta.discover"][lang]}
             </a>
           </div>
         </motion.div>
@@ -179,43 +78,18 @@ const HeroSection = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3, duration: 0.8 }}
-          style={{
-            width: "100%",
-            aspectRatio: "3/4",
-            overflow: "hidden",
-            borderRadius: "2px",
-            position: "relative",
-          }}
+          className="relative aspect-[3/4] w-full max-w-md mx-auto md:max-w-none overflow-hidden rounded-sm"
         >
           <img
             src={heroPortrait}
             alt="Chams Modeste HEDJI"
-            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }}
+            className="w-full h-full object-cover object-top"
           />
-          {/* Effet de lumière blanchâtre en bas */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: "40%",
-              background: "linear-gradient(to top, #f4efe4, transparent)",
-              pointerEvents: "none",
-            }}
-          />
+          {/* Effet de fondu en bas */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60 pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background to-transparent pointer-events-none" />
         </motion.div>
       </div>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .hero-grid {
-            grid-template-columns: 1fr !important;
-            padding: 3rem 1.5rem 2rem !important;
-            gap: 2rem !important;
-          }
-        }
-      `}</style>
     </section>
   );
 };

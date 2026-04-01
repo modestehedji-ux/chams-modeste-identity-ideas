@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sun, Moon, Globe } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { useTheme } from "@/hooks/use-theme";
+import { useTheme } from "next-themes";
 import { useI18n, uiStrings } from "@/hooks/use-i18n";
 
 const navItemKeys = [
@@ -21,7 +21,7 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState("accueil");
   const location = useLocation();
   const isHome = location.pathname === "/";
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const { lang, setLang } = useI18n();
 
   const navItems = navItemKeys.map((item) => ({
@@ -117,7 +117,7 @@ const Navbar = () => {
             )
           )}
           <button
-            onClick={toggleTheme}
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="p-2 rounded-full text-muted-foreground hover:text-primary transition-colors duration-300"
             aria-label="Changer de thème"
           >
@@ -143,7 +143,7 @@ const Navbar = () => {
             {lang === "fr" ? "EN" : "FR"}
           </button>
           <button
-            onClick={toggleTheme}
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="p-2 rounded-full text-muted-foreground hover:text-primary transition-colors duration-300"
             aria-label="Changer de thème"
           >

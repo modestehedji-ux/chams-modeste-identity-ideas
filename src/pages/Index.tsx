@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div style={{ background: "#f4efe4" }}>
+    <div className="bg-background min-h-screen">
       <Navbar />
       <HeroSection />
       <ApercuOffres />

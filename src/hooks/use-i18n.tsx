@@ -52,6 +52,9 @@ export const useI18n = () => useContext(I18nContext);
 
 /** Static UI translations used across the app */
 export const uiStrings: Record<string, Record<Lang, string>> = {
+  // Common
+  "common.loading": { fr: "Chargement...", en: "Loading..." },
+
   // Navbar
   "nav.home": { fr: "Accueil", en: "Home" },
   "nav.about": { fr: "À propos", en: "About" },
@@ -64,6 +67,10 @@ export const uiStrings: Record<string, Record<Lang, string>> = {
   // Hero
   "hero.discover": { fr: "Découvrir", en: "Discover" },
   "hero.contact": { fr: "Me contacter", en: "Contact me" },
+  "hero.quote": { fr: "« Penser le monde, mais aussi le transformer. »", en: "“Think the world, but also transform it.”" },
+  "hero.cta.work": { fr: "Travailler ensemble", en: "Work together" },
+  "hero.cta.discover": { fr: "Découvrir mon travail", en: "Discover my work" },
+  "hero.intersection": { fr: "À l'intersection de la pensée critique et de l'action concrète.", en: "At the intersection of critical thinking and concrete action." },
 
   // About
   "about.label": { fr: "À propos", en: "About" },
