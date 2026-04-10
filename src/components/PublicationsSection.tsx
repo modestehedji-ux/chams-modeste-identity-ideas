@@ -92,8 +92,8 @@ const PublicationsSection = () => {
                   {t(pub.title_fr, pub.title_en)}
                 </h3>
                 <div
-                  className="font-body"
-                  style={{ fontSize: "0.78rem", color: "#8a6a1a", marginBottom: "0.6rem", fontWeight: 500 }}
+                  className="font-body [&_*]:!text-[#8a6a1a] [&_strong]:!text-[#1a1710] [&_strong]:!font-semibold"
+                  style={{ fontSize: "0.78rem", marginBottom: "0.6rem", fontWeight: 500 }}
                   dangerouslySetInnerHTML={{ __html: t(pub.detail_fr, pub.detail_en) }}
                 />
               </div>

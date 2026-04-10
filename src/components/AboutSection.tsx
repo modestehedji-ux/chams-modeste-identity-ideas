@@ -57,7 +57,7 @@ const AboutSection = () => {
           >
             {about ? (
               <div
-                className="font-body text-base md:text-lg text-foreground/80 leading-relaxed space-y-4"
+                className="font-body text-base md:text-lg leading-relaxed space-y-4 [&_*]:!text-foreground/80 [&_strong]:!text-foreground [&_strong]:!font-semibold"
                 dangerouslySetInnerHTML={{
                   __html: [
                     t(about.paragraph1_fr, about.paragraph1_en),
@@ -74,9 +74,10 @@ const AboutSection = () => {
             )}
 
             <div className="border-l-4 border-primary pl-6 py-4 mt-8 bg-card/50 rounded-r-md">
-              <p className="font-heading text-xl md:text-2xl font-medium italic text-foreground leading-snug">
-                {about ? t(about.paragraph3_fr, about.paragraph3_en) : ""}
-              </p>
+              <div 
+                className="font-heading text-xl md:text-2xl font-medium italic text-foreground leading-snug [&_*]:!text-inherit"
+                dangerouslySetInnerHTML={{ __html: about ? t(about.paragraph3_fr, about.paragraph3_en) : "" }}
+              />
             </div>
           </motion.div>
 
@@ -104,9 +105,10 @@ const AboutSection = () => {
                   <h5 className="font-body text-sm font-bold text-foreground mb-2 leading-snug">
                     {t(h.label_fr, h.label_en)}
                   </h5>
-                  <p className="font-body text-xs text-muted-foreground leading-relaxed">
-                    {t(h.detail_fr, h.detail_en)}
-                  </p>
+                  <div 
+                    className="font-body text-xs text-muted-foreground leading-relaxed [&_*]:!text-muted-foreground [&_strong]:!text-foreground"
+                    dangerouslySetInnerHTML={{ __html: t(h.detail_fr, h.detail_en) }}
+                  />
                 </motion.div>
               );
             })}

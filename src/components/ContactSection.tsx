@@ -65,9 +65,11 @@ const ContactSection = () => {
             <em style={{ color: "#b8922a", fontStyle: "italic" }}>la conversation</em>
           </h1>
           <div style={{ width: "40px", height: "2px", background: "#b8922a", margin: "1.5rem 0 2rem" }} />
-          <p className="font-body" style={{ fontSize: "0.93rem", color: "#555", lineHeight: 1.85, marginBottom: "1rem" }}>
-            {info ? t(info.description_fr, info.description_en) : ""}
-          </p>
+          <div 
+            className="font-body [&_*]:!text-foreground/80 [&_strong]:!text-foreground [&_strong]:!font-semibold" 
+            style={{ fontSize: "0.93rem", lineHeight: 1.85, marginBottom: "1rem" }}
+            dangerouslySetInnerHTML={{ __html: info ? t(info.description_fr, info.description_en) : "" }}
+          />
 
           <div style={{ marginTop: "2rem" }}>
             {infoItems.map((item, i) => (

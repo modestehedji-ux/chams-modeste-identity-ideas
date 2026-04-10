@@ -133,8 +133,8 @@ const ParcoursSection = () => {
                         {item.year}
                       </div>
                       <div
-                        className="font-body"
-                        style={{ fontSize: "0.9rem", fontWeight: 600, color: "#1a1710", marginBottom: "0.2rem", lineHeight: 1.4 }}
+                        className="font-body [&_*]:!text-[#1a1710] [&_strong]:!text-[#1a1710] [&_strong]:!font-semibold"
+                        style={{ fontSize: "0.9rem", fontWeight: 600, marginBottom: "0.2rem", lineHeight: 1.4 }}
                         dangerouslySetInnerHTML={{ __html: t(item.title_fr, item.title_en) }}
                       />
                     </>
