@@ -49,9 +49,10 @@ const HeroSection = () => {
               __html: `<strong class="text-foreground">${uiStrings["hero.intersection"][lang]}</strong>`,
             }}
           />
-          <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed mb-8">
-            {description}
-          </p>
+          <div 
+            className="font-body text-sm md:text-base text-muted-foreground leading-relaxed mb-8 prose prose-sm max-w-none prose-p:my-1"
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
 
           <p className="font-heading text-lg md:text-xl italic text-primary/80 mb-10">
             {uiStrings["hero.quote"][lang]}
