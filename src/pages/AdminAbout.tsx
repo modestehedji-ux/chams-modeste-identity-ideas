@@ -4,6 +4,7 @@ import { Save, Plus, Trash2, Edit2 } from "lucide-react";
 import { getAbout, updateAbout, getHighlights, createHighlight, updateHighlight, deleteHighlight, type AboutData, type Highlight } from "@/lib/content";
 import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { useToast } from "@/hooks/use-toast";
+import { translateText } from "@/lib/translate";
 
 const iconOptions = ["GraduationCap", "Scale", "Theater", "BookOpen", "FileText", "Pen", "Award", "Star", "Globe", "Heart"];
 
@@ -14,6 +15,8 @@ const AdminAbout = () => {
   const [savingAbout, setSavingAbout] = useState(false);
   const [editingHighlight, setEditingHighlight] = useState<Partial<Highlight> | null>(null);
   const [savingHL, setSavingHL] = useState(false);
+  const [translatingAbout, setTranslatingAbout] = useState(false);
+  const [translatingHL, setTranslatingHL] = useState(false);
 
   useEffect(() => {
     getAbout().then(setAbout);
@@ -21,6 +24,52 @@ const AdminAbout = () => {
   }, []);
 
   const refreshHighlights = () => getHighlights().then(setHighlights).catch(() => {});
+
+  const handleTranslateAbout = async () => {
+    if (!about) return;
+    setTranslatingAbout(true);
+    try {
+      const [th, tp1, tp2, tp3] = await Promise.all([
+        about.heading_fr ? translateText(about.heading_fr) : Promise.resolve(""),
+        about.paragraph1_fr ? translateText(about.paragraph1_fr) : Promise.resolve(""),
+        about.paragraph2_fr ? translateText(about.paragraph2_fr) : Promise.resolve(""),
+        about.paragraph3_fr ? translateText(about.paragraph3_fr) : Promise.resolve(""),
+      ]);
+      setAbout({
+        ...about,
+        heading_en: th,
+        paragraph1_en: tp1,
+        paragraph2_en: tp2,
+        paragraph3_en: tp3,
+      });
+      toast({ title: "Traduction terminée" });
+    } catch (e: any) {
+      toast({ title: "Erreur de traduction", description: e.message, variant: "destructive" });
+    } finally {
+      setTranslatingAbout(false);
+    }
+  };
+
+  const handleTranslateHighlight = async () => {
+    if (!editingHighlight) return;
+    setTranslatingHL(true);
+    try {
+      const [tl, td] = await Promise.all([
+        editingHighlight.label_fr ? translateText(editingHighlight.label_fr) : Promise.resolve(""),
+        editingHighlight.detail_fr ? translateText(editingHighlight.detail_fr) : Promise.resolve(""),
+      ]);
+      setEditingHighlight({
+        ...editingHighlight,
+        label_en: tl,
+        detail_en: td,
+      });
+      toast({ title: "Traduction terminée" });
+    } catch (e: any) {
+      toast({ title: "Erreur de traduction", description: e.message, variant: "destructive" });
+    } finally {
+      setTranslatingHL(false);
+    }
+  };
 
   const handleSaveAbout = async () => {
     if (!about) return;
@@ -119,14 +168,23 @@ const AdminAbout = () => {
       </div>
 
       <div className="bg-card border border-border rounded-sm p-6 shadow-sm space-y-6">
-        <h2 className="font-heading font-semibold text-foreground border-b border-border pb-3">Text — 🇬🇧 English</h2>
+        <div className="border-b border-border pb-3 flex justify-between items-center">
+          <h2 className="font-heading font-semibold text-foreground">Text — 🇬🇧 English</h2>
+          <button 
+            disabled={translatingAbout}
+            onClick={handleTranslateAbout}
+            className="text-xs flex items-center gap-1.5 bg-primary/10 text-primary hover:bg-primary/20 px-3 py-1.5 rounded-sm transition-colors font-medium disabled:opacity-50"
+          >
+            {translatingAbout ? "Traduction..." : "✨ Auto-Traduire depuis FR"}
+          </button>
+        </div>
         <Field label="Heading" value={about.heading_en} onChange={(v) => setAbout({ ...about, heading_en: v })} />
         <Field label="Paragraph 1" value={about.paragraph1_en} onChange={(v) => setAbout({ ...about, paragraph1_en: v })} rows={3} />
         <Field label="Paragraph 2" value={about.paragraph2_en} onChange={(v) => setAbout({ ...about, paragraph2_en: v })} rows={3} />
         <Field label="Paragraph 3" value={about.paragraph3_en} onChange={(v) => setAbout({ ...about, paragraph3_en: v })} rows={3} />
       </div>
 
-      <button onClick={handleSaveAbout} disabled={savingAbout} className="inline-flex items-center gap-2 bg-gold-gradient text-primary-foreground font-body font-semibold px-8 py-3 rounded-sm tracking-wide text-sm uppercase hover:opacity-90 transition-opacity disabled:opacity-60">
+      <button onClick={handleSaveAbout} disabled={savingAbout || translatingAbout} className="inline-flex items-center gap-2 bg-gold-gradient text-primary-foreground font-body font-semibold px-8 py-3 rounded-sm tracking-wide text-sm uppercase hover:opacity-90 transition-opacity disabled:opacity-60">
         <Save size={16} />
         {savingAbout ? "Sauvegarde..." : "Enregistrer le texte"}
       </button>
@@ -169,9 +227,18 @@ const AdminAbout = () => {
       {editingHighlight && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setEditingHighlight(null)}>
           <div className="bg-card border border-border rounded-sm p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto space-y-4" onClick={(e) => e.stopPropagation()}>
-            <h3 className="font-heading font-semibold text-foreground text-lg">
-              {editingHighlight.id ? "Modifier le point fort" : "Nouveau point fort"}
-            </h3>
+            <div className="flex justify-between items-center border-b border-border pb-2">
+              <h3 className="font-heading font-semibold text-foreground text-lg">
+                {editingHighlight.id ? "Modifier le point fort" : "Nouveau point fort"}
+              </h3>
+              <button 
+                disabled={translatingHL}
+                onClick={handleTranslateHighlight}
+                className="text-xs flex items-center gap-1.5 bg-primary/10 text-primary hover:bg-primary/20 px-3 py-1.5 rounded-sm transition-colors font-medium disabled:opacity-50"
+              >
+                {translatingHL ? "..." : "✨ Auto-Traduire EN"}
+              </button>
+            </div>
             <div>
               <label className="block text-xs font-body uppercase tracking-widest text-muted-foreground mb-2">Icône</label>
               <select
@@ -198,7 +265,7 @@ const AdminAbout = () => {
               />
             </div>
             <div className="flex gap-3 pt-2">
-              <button onClick={handleSaveHighlight} disabled={savingHL} className="inline-flex items-center gap-2 bg-primary text-primary-foreground py-2 px-6 text-sm font-medium hover:bg-primary/90 transition-colors rounded-sm disabled:opacity-60">
+              <button onClick={handleSaveHighlight} disabled={savingHL || translatingHL} className="inline-flex items-center gap-2 bg-primary text-primary-foreground py-2 px-6 text-sm font-medium hover:bg-primary/90 transition-colors rounded-sm disabled:opacity-60">
                 <Save size={16} /> {savingHL ? "..." : "Sauvegarder"}
               </button>
               <button onClick={() => setEditingHighlight(null)} className="py-2 px-6 text-sm font-medium text-muted-foreground hover:text-foreground border border-border rounded-sm transition-colors">

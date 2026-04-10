@@ -4,6 +4,7 @@ import { Plus, Edit2, Trash2, Save } from "lucide-react";
 import { getPublications, createPublication, updatePublication, deletePublication, type Publication } from "@/lib/content";
 import { useToast } from "@/hooks/use-toast";
 import { RichTextEditor } from "@/components/ui/rich-text-editor";
+import { translateText } from "@/lib/translate";
 
 const iconOptions = ["BookOpen", "FileText", "Pen", "Award", "Star", "GraduationCap"];
 
@@ -12,12 +13,36 @@ const AdminPublications = () => {
   const [items, setItems] = useState<Publication[]>([]);
   const [editing, setEditing] = useState<Partial<Publication> | null>(null);
   const [saving, setSaving] = useState(false);
+  const [translating, setTranslating] = useState(false);
 
   useEffect(() => {
     refresh();
   }, []);
 
   const refresh = () => getPublications().then(setItems).catch(() => {});
+
+  const handleTranslate = async () => {
+    if (!editing) return;
+    setTranslating(true);
+    try {
+      const [type, title, detail] = await Promise.all([
+        editing.type_fr ? translateText(editing.type_fr) : Promise.resolve(""),
+        editing.title_fr ? translateText(editing.title_fr) : Promise.resolve(""),
+        editing.detail_fr ? translateText(editing.detail_fr) : Promise.resolve(""),
+      ]);
+      setEditing({
+        ...editing,
+        type_en: type,
+        title_en: title,
+        detail_en: detail,
+      });
+      toast({ title: "Traduction terminée" });
+    } catch (e: any) {
+      toast({ title: "Erreur de traduction", description: e.message, variant: "destructive" });
+    } finally {
+      setTranslating(false);
+    }
+  };
 
   const handleSave = async () => {
     if (!editing) return;
@@ -119,9 +144,18 @@ const AdminPublications = () => {
       {editing && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setEditing(null)}>
           <div className="bg-card border border-border rounded-sm p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto space-y-4" onClick={(e) => e.stopPropagation()}>
-            <h3 className="font-heading font-semibold text-foreground text-lg">
-              {editing.id ? "Modifier la publication" : "Nouvelle publication"}
-            </h3>
+            <div className="flex justify-between items-center border-b border-border pb-2">
+              <h3 className="font-heading font-semibold text-foreground text-lg">
+                {editing.id ? "Modifier la publication" : "Nouvelle publication"}
+              </h3>
+              <button 
+                disabled={translating}
+                onClick={handleTranslate}
+                className="text-xs flex items-center gap-1.5 bg-primary/10 text-primary hover:bg-primary/20 px-3 py-1.5 rounded-sm transition-colors font-medium disabled:opacity-50"
+              >
+                {translating ? "..." : "✨ Auto-Traduire EN"}
+              </button>
+            </div>
             <div>
               <label className="block text-xs font-body uppercase tracking-widest text-muted-foreground mb-2">Icône</label>
               <select
@@ -150,7 +184,7 @@ const AdminPublications = () => {
               />
             </div>
             <div className="flex gap-3 pt-2">
-              <button onClick={handleSave} disabled={saving} className="inline-flex items-center gap-2 bg-primary text-primary-foreground py-2 px-6 text-sm font-medium hover:bg-primary/90 transition-colors rounded-sm disabled:opacity-60">
+              <button onClick={handleSave} disabled={saving || translating} className="inline-flex items-center gap-2 bg-primary text-primary-foreground py-2 px-6 text-sm font-medium hover:bg-primary/90 transition-colors rounded-sm disabled:opacity-60">
                 <Save size={16} /> {saving ? "..." : "Sauvegarder"}
               </button>
               <button onClick={() => setEditing(null)} className="py-2 px-6 text-sm font-medium text-muted-foreground hover:text-foreground border border-border rounded-sm transition-colors">
