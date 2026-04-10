@@ -50,9 +50,13 @@ const HeroSection = () => {
             }}
           />
           <div 
-            className="font-body text-sm md:text-base text-foreground/80 leading-relaxed mb-10 prose prose-sm max-w-none prose-p:my-1 prose-strong:text-foreground prose-strong:font-semibold prose-span:!text-inherit"
+            className="font-body text-sm md:text-base leading-relaxed mb-6 prose prose-sm max-w-none prose-p:my-1 [&_*]:!text-foreground/80 [&_strong]:!text-foreground [&_strong]:!font-semibold"
             dangerouslySetInnerHTML={{ __html: description }}
           />
+
+          <p className="font-heading text-lg md:text-xl italic text-primary/80 mb-10">
+            {uiStrings["hero.quote"][lang]}
+          </p>
 
           <div className="flex flex-wrap gap-4">
             <Link
