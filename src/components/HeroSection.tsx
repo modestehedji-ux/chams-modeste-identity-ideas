@@ -108,7 +108,7 @@ const HeroSection = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="font-body text-base md:text-lg text-foreground/90 leading-relaxed mb-6 max-w-xl"
+                className="font-body text-base md:text-lg text-foreground font-medium leading-relaxed mb-6 max-w-xl"
                 dangerouslySetInnerHTML={{ __html: slide.description }}
               />
 
