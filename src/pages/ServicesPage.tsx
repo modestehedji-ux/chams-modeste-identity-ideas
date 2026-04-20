@@ -128,7 +128,7 @@ const ServicesPage = () => {
             key={o.num}
             style={{
               display: "grid",
-              gridTemplateColumns: "80px 1fr 1fr",
+              gridTemplateColumns: "1fr 1fr",
               gap: "2.5rem",
               alignItems: "start",
               padding: "2.5rem 0",
@@ -136,9 +136,7 @@ const ServicesPage = () => {
             }}
             className="offre-card-grid"
           >
-            <div className="font-heading" style={{ fontSize: "3.5rem", color: "#f5edd8", fontWeight: 700, lineHeight: 1 }}>
-              {o.num}
-            </div>
+
             <div>
               <span
                 className="font-body"
@@ -216,9 +214,7 @@ const ServicesPage = () => {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "2rem" }} className="etapes-grid">
             {etapes.map((e) => (
               <div key={e.num} style={{ textAlign: "center", padding: "0 1rem" }}>
-                <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "#b8922a", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem", color: "white", fontSize: "0.72rem", fontWeight: 600 }}>
-                  {e.num}
-                </div>
+
                 <h5 className="font-heading" style={{ fontSize: "1.05rem", fontWeight: 600, color: "#1a1710", marginBottom: "0.5rem" }}>{e.title}</h5>
                 <p className="font-body" style={{ fontSize: "0.82rem", color: "#6b6560", lineHeight: 1.6 }}>{e.desc}</p>
               </div>

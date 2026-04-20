@@ -62,17 +62,7 @@ const ApercuOffres = () => {
                 (e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)")
               }
             >
-              <div
-                className="font-heading"
-                style={{
-                  fontSize: "2.5rem",
-                  color: "rgba(184,146,42,0.3)",
-                  fontWeight: 700,
-                  marginBottom: "0.8rem",
-                }}
-              >
-                {o.num}
-              </div>
+
               <h4
                 className="font-heading"
                 style={{
@@ -120,7 +110,7 @@ const ApercuOffres = () => {
             (e.currentTarget.style.background = "#b8922a")
           }
         >
-          Voir tous les services
+          Voir +
         </Link>
       </div>
     </section>
