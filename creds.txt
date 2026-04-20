@@ -1,0 +1,40 @@
+﻿
+Informations d'identification actuellement stockées :
+
+    Cible : MicrosoftAccount:target=SSO_POP_User:user=modestehedji@gmail.com
+    Type : Générique 
+    Utilisateur : modestehedji@gmail.com
+    Sauvegardées pour cette ouverture de session uniquement
+       Cible : MicrosoftAccount:target=SSO_POP_Device
+    Type : Générique 
+    Utilisateur : 02ridbqqkmnatcyp
+    Sauvegardées pour cette ouverture de session uniquement
+       Cible : LegacyGeneric:target=git:https://github.com
+    Type : Générique 
+    Utilisateur : modestehedji-ux
+    Persistance de l'ordinateur local
+    
+    Cible : LegacyGeneric:target=Supabase CLI:supabase
+    Type : Générique 
+    Utilisateur : supabase
+    Persistance de l'ordinateur local
+    
+    Cible : LegacyGeneric:target=MicrosoftAccount:user=modestehedji@gmail.com
+    Type : Générique 
+    Utilisateur : modestehedji@gmail.com
+    Persistance de l'ordinateur local
+    
+    Cible : WindowsLive:target=virtualapp/didlogical
+    Type : Générique 
+    Utilisateur : 02ridbqqkmnatcyp
+    Persistance de l'ordinateur local
+    
+    Cible : LegacyGeneric:target=Olk/PushNotificationsKey
+    Type : Générique 
+    Utilisateur : Olk/PushNotificationsKey
+    Persistance de l'ordinateur local
+    
+    Cible : LegacyGeneric:target=GitHub - https://api.github.com/modestehedji-ux
+    Type : Générique 
+    Utilisateur : modestehedji-ux
+    

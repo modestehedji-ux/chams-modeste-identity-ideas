@@ -71,6 +71,10 @@ export const uiStrings: Record<string, Record<Lang, string>> = {
   "hero.cta.work": { fr: "Travailler ensemble", en: "Work together" },
   "hero.cta.discover": { fr: "Découvrir mon travail", en: "Discover my work" },
   "hero.intersection": { fr: "À l'intersection de la pensée critique et de l'action concrète.", en: "At the intersection of critical thinking and concrete action." },
+  "hero.slide2.title": { fr: "Philosophie & Droit", en: "Philosophy & Law" },
+  "hero.slide2.desc": { fr: "Une réflexion rigoureuse au service de l'action sociale et de la justice en Afrique.", en: "Rigorous reflection serving social action and justice in Africa." },
+  "hero.slide3.title": { fr: "Transition Numérique", en: "Digital Transition" },
+  "hero.slide3.desc": { fr: "Accompagner les structures dans l'adoption éthique et efficace de l'IA.", en: "Supporting structures in the ethical and efficient adoption of AI." },
 
   // About
   "about.label": { fr: "À propos", en: "About" },
