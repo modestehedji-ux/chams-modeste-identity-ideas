@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { getContactInfo, type ContactInfo } from "@/lib/content";
 import { useI18n } from "@/hooks/use-i18n";
 
@@ -8,17 +9,23 @@ const ContactSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useI18n();
   const [info, setInfo] = useState<ContactInfo | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getContactInfo().then(setInfo).catch(() => {});
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     setSent(true);
-    setTimeout(() => setSent(false), 3000);
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
   };
 
   const infoItems = [
@@ -101,13 +108,15 @@ const ContactSection = () => {
         </motion.div>
 
         {/* Right: form */}
-        <motion.form
-          onSubmit={handleSubmit}
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2 }}
-          style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}
         >
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}
+          >
           {[
             { label: "Votre nom", type: "text", placeholder: "Prénom et nom" },
             { label: "Votre email", type: "email", placeholder: "votre@email.com" },
@@ -171,16 +180,16 @@ const ContactSection = () => {
             Je lis chaque message personnellement et réponds sous 48 heures.
           </p>
 
-          <a
-            href="mailto:modestehedji@gmail.com"
+          <button
+            type="submit"
+            disabled={isSubmitting}
             className="font-body"
-            style={{ background: "#b8922a", color: "white", padding: "0.85rem 2rem", fontSize: "0.72rem", letterSpacing: "2px", textTransform: "uppercase", fontWeight: 600, textDecoration: "none", display: "block", textAlign: "center", transition: "background 0.2s" }}
-            onMouseEnter={e => (e.currentTarget.style.background = "#8a6a1a")}
-            onMouseLeave={e => (e.currentTarget.style.background = "#b8922a")}
+            style={{ background: isSubmitting ? "#8a6a1a" : "#b8922a", color: "white", padding: "0.85rem 2rem", fontSize: "0.72rem", letterSpacing: "2px", textTransform: "uppercase", fontWeight: 600, border: "none", cursor: isSubmitting ? "not-allowed" : "pointer", display: "block", width: "100%", textAlign: "center", transition: "background 0.2s", opacity: isSubmitting ? 0.8 : 1 }}
           >
-            {sent ? "Message reçu ! ✓" : "Envoyer le message"}
-          </a>
-        </motion.form>
+            {sent ? "Message reçu ! ✓ Redirection..." : "Envoyer le message"}
+          </button>
+          </form>
+        </motion.div>
       </div>
 
       <style>{`
