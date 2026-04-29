@@ -34,7 +34,7 @@ const Footer = () => {
             Chams Modeste <span style={{ color: "#b8922a" }}>HEDJI</span>
           </p>
           <p className="font-body" style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.8, marginBottom: "1rem" }}>
-            Diplômé en Philosophie · Auteur · Juriste des droits humains (en formation)
+            SCIENCES HUMAINES ET SOCIALES · CRÉATION NUMÉRIQUE
           </p>
           <div className="font-body" style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.35)", lineHeight: 2 }}>
             <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
