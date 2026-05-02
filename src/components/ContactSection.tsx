@@ -9,23 +9,49 @@ const ContactSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useI18n();
   const [info, setInfo] = useState<ContactInfo | null>(null);
   const navigate = useNavigate();
 
+  // Controlled form state
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+
   useEffect(() => {
-    getContactInfo().then(setInfo).catch(() => {});
+    getContactInfo().then(setInfo).catch(() => { });
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isSubmitting) return;
     setIsSubmitting(true);
-    setSent(true);
-    setTimeout(() => {
-      navigate("/");
-    }, 2000);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Erreur lors de l'envoi.");
+      }
+
+      setSent(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Une erreur s'est produite. Veuillez réessayer.");
+      setIsSubmitting(false);
+    }
   };
 
   const infoItems = [
@@ -72,8 +98,8 @@ const ContactSection = () => {
             <em style={{ color: "#b8922a", fontStyle: "italic" }}>la conversation</em>
           </h1>
           <div style={{ width: "40px", height: "2px", background: "#b8922a", margin: "1.5rem 0 2rem" }} />
-          <div 
-            className="font-body [&_*]:!text-foreground/80 [&_strong]:!text-foreground [&_strong]:!font-semibold" 
+          <div
+            className="font-body [&_*]:!text-foreground/80 [&_strong]:!text-foreground [&_strong]:!font-semibold"
             style={{ fontSize: "0.93rem", lineHeight: 1.85, marginBottom: "1rem" }}
             dangerouslySetInnerHTML={{ __html: info ? t(info.description_fr, info.description_en) : "" }}
           />
@@ -117,77 +143,96 @@ const ContactSection = () => {
             onSubmit={handleSubmit}
             style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}
           >
-          {[
-            { label: "Votre nom", type: "text", placeholder: "Prénom et nom" },
-            { label: "Votre email", type: "email", placeholder: "votre@email.com" },
-          ].map(({ label, type, placeholder }) => (
-            <div key={label} style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-              <label
-                className="font-body"
-                style={{ fontSize: "0.68rem", letterSpacing: "1.5px", textTransform: "uppercase", color: "#6b6560", fontWeight: 600 }}
-              >
-                {label}
-              </label>
+            {/* Nom */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              <label className="font-body" style={{ fontSize: "0.68rem", letterSpacing: "1.5px", textTransform: "uppercase", color: "#6b6560", fontWeight: 600 }}>Votre nom</label>
               <input
-                type={type}
-                placeholder={placeholder}
+                type="text"
+                placeholder="Prénom et nom"
                 required
                 className="font-body"
+                value={name}
+                onChange={e => setName(e.target.value)}
                 style={{ background: "white", border: "0.5px solid #ede7d9", padding: "0.8rem 1rem", fontSize: "0.9rem", color: "#1a1710", outline: "none", width: "100%", transition: "border-color 0.2s" }}
                 onFocus={e => (e.currentTarget.style.borderColor = "#b8922a")}
                 onBlur={e => (e.currentTarget.style.borderColor = "#ede7d9")}
               />
             </div>
-          ))}
 
-          {/* Select */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-            <label className="font-body" style={{ fontSize: "0.68rem", letterSpacing: "1.5px", textTransform: "uppercase", color: "#6b6560", fontWeight: 600 }}>
-              Type de demande
-            </label>
-            <select
+            {/* Email */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              <label className="font-body" style={{ fontSize: "0.68rem", letterSpacing: "1.5px", textTransform: "uppercase", color: "#6b6560", fontWeight: 600 }}>Votre email</label>
+              <input
+                type="email"
+                placeholder="votre@email.com"
+                required
+                className="font-body"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                style={{ background: "white", border: "0.5px solid #ede7d9", padding: "0.8rem 1rem", fontSize: "0.9rem", color: "#1a1710", outline: "none", width: "100%", transition: "border-color 0.2s" }}
+                onFocus={e => (e.currentTarget.style.borderColor = "#b8922a")}
+                onBlur={e => (e.currentTarget.style.borderColor = "#ede7d9")}
+              />
+            </div>
+
+            {/* Select */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              <label className="font-body" style={{ fontSize: "0.68rem", letterSpacing: "1.5px", textTransform: "uppercase", color: "#6b6560", fontWeight: 600 }}>
+                Type de demande
+              </label>
+              <select
+                className="font-body"
+                value={subject}
+                onChange={e => setSubject(e.target.value)}
+                style={{ background: "white", border: "0.5px solid #ede7d9", padding: "0.8rem 1rem", fontSize: "0.9rem", color: "#1a1710", outline: "none", width: "100%", transition: "border-color 0.2s" }}
+                onFocus={e => (e.currentTarget.style.borderColor = "#b8922a")}
+                onBlur={e => (e.currentTarget.style.borderColor = "#ede7d9")}
+              >
+                <option value="">Sélectionnez...</option>
+                <option>Collaboration académique / recherche</option>
+                <option>Services numériques (site, IA, automatisation)</option>
+                <option>Intervention / conférence</option>
+                <option>Création de contenu</option>
+                <option>Autre</option>
+              </select>
+            </div>
+
+            {/* Textarea */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              <label className="font-body" style={{ fontSize: "0.68rem", letterSpacing: "1.5px", textTransform: "uppercase", color: "#6b6560", fontWeight: 600 }}>
+                Votre message
+              </label>
+              <textarea
+                rows={5}
+                placeholder="Décrivez votre projet ou votre besoin, même brièvement..."
+                required
+                className="font-body"
+                value={message}
+                onChange={e => setMessage(e.target.value)}
+                style={{ background: "white", border: "0.5px solid #ede7d9", padding: "0.8rem 1rem", fontSize: "0.9rem", color: "#1a1710", outline: "none", width: "100%", resize: "vertical", transition: "border-color 0.2s", minHeight: "130px" }}
+                onFocus={e => (e.currentTarget.style.borderColor = "#b8922a")}
+                onBlur={e => (e.currentTarget.style.borderColor = "#ede7d9")}
+              />
+            </div>
+
+            <p className="font-body" style={{ fontSize: "0.78rem", color: "#6b6560" }}>
+              Je lis chaque message personnellement et réponds sous 48 heures.
+            </p>
+
+            {error && (
+              <p className="font-body" style={{ fontSize: "0.85rem", color: "#c0392b", background: "#fdf0ef", padding: "0.7rem 1rem", border: "1px solid #f5c6c2", borderRadius: "4px" }}>
+                ⚠ {error}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={isSubmitting || sent}
               className="font-body"
-              style={{ background: "white", border: "0.5px solid #ede7d9", padding: "0.8rem 1rem", fontSize: "0.9rem", color: "#1a1710", outline: "none", width: "100%", transition: "border-color 0.2s" }}
-              onFocus={e => (e.currentTarget.style.borderColor = "#b8922a")}
-              onBlur={e => (e.currentTarget.style.borderColor = "#ede7d9")}
+              style={{ background: sent ? "#4a7a4a" : isSubmitting ? "#8a6a1a" : "#b8922a", color: "white", padding: "0.85rem 2rem", fontSize: "0.72rem", letterSpacing: "2px", textTransform: "uppercase", fontWeight: 600, border: "none", cursor: (isSubmitting || sent) ? "not-allowed" : "pointer", display: "block", width: "100%", textAlign: "center", transition: "background 0.2s", opacity: (isSubmitting || sent) ? 0.85 : 1 }}
             >
-              <option value="">Sélectionnez...</option>
-              <option>Collaboration académique / recherche</option>
-              <option>Services numériques (site, IA, automatisation)</option>
-              <option>Intervention / conférence</option>
-              <option>Création de contenu</option>
-              <option>Autre</option>
-            </select>
-          </div>
-
-          {/* Textarea */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-            <label className="font-body" style={{ fontSize: "0.68rem", letterSpacing: "1.5px", textTransform: "uppercase", color: "#6b6560", fontWeight: 600 }}>
-              Votre message
-            </label>
-            <textarea
-              rows={5}
-              placeholder="Décrivez votre projet ou votre besoin, même brièvement..."
-              required
-              className="font-body"
-              style={{ background: "white", border: "0.5px solid #ede7d9", padding: "0.8rem 1rem", fontSize: "0.9rem", color: "#1a1710", outline: "none", width: "100%", resize: "vertical", transition: "border-color 0.2s", minHeight: "130px" }}
-              onFocus={e => (e.currentTarget.style.borderColor = "#b8922a")}
-              onBlur={e => (e.currentTarget.style.borderColor = "#ede7d9")}
-            />
-          </div>
-
-          <p className="font-body" style={{ fontSize: "0.78rem", color: "#6b6560" }}>
-            Je lis chaque message personnellement et réponds sous 48 heures.
-          </p>
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="font-body"
-            style={{ background: isSubmitting ? "#8a6a1a" : "#b8922a", color: "white", padding: "0.85rem 2rem", fontSize: "0.72rem", letterSpacing: "2px", textTransform: "uppercase", fontWeight: 600, border: "none", cursor: isSubmitting ? "not-allowed" : "pointer", display: "block", width: "100%", textAlign: "center", transition: "background 0.2s", opacity: isSubmitting ? 0.8 : 1 }}
-          >
-            {sent ? "Message reçu ! ✓ Redirection..." : "Envoyer le message"}
-          </button>
+              {sent ? "Message envoyé ! ✓ Redirection..." : isSubmitting ? "Envoi en cours..." : "Envoyer le message"}
+            </button>
           </form>
         </motion.div>
       </div>
