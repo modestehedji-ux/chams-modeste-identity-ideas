@@ -38,7 +38,15 @@ const ContactSection = () => {
         body: JSON.stringify({ name, email, subject, message }),
       });
 
-      const data = await res.json();
+      const contentType = res.headers.get("content-type");
+      let data: any = {};
+
+      if (contentType && contentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        // En mode dev (Vite sans Vercel), la route /api n'existe pas
+        throw new Error("L'API de contact n'est pas disponible localement. Utilisez 'vercel dev' ou testez sur le site en ligne.");
+      }
 
       if (!res.ok) {
         throw new Error(data.error || "Erreur lors de l'envoi.");
@@ -122,11 +130,7 @@ const ContactSection = () => {
                   {item.label}
                 </span>
                 <span style={{ fontSize: "0.88rem", color: "#1a1710", lineHeight: 1.5 }}>
-                  {item.label === "Email" ? (
-                    <a href={`mailto:${item.value}`} style={{ color: "#1a1710", textDecoration: "none" }}>{item.value}</a>
-                  ) : item.label === "LinkedIn" ? (
-                    <a href="https://www.linkedin.com/in/chams-modeste-hedji-49469426b/" target="_blank" rel="noopener noreferrer" style={{ color: "#1a1710", textDecoration: "none" }}>{item.value}</a>
-                  ) : item.value}
+                  {item.value}
                 </span>
               </div>
             ))}
