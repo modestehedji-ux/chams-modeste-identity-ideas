@@ -1,14 +1,24 @@
-﻿import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+    // Permettre un simple test GET pour voir si l'API répond bien
+    if (req.method === 'GET') {
+        return res.status(200).json({ status: 'API is working' });
+    }
+
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
+        const apiKey = process.env.RESEND_API_KEY;
+        if (!apiKey) {
+            console.error('RESEND_API_KEY is missing');
+            return res.status(500).json({ error: 'Configuration serveur manquante (clé API).' });
+        }
+
+        const resend = new Resend(apiKey);
         const { name, email, subject, message } = req.body;
 
         if (!name || !email || !message) {
@@ -49,7 +59,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   </div>
 
   <p style="margin-top: 2rem; font-size: 0.8rem; color: #6b6560;">
-    Message recu via le formulaire de contact du site chams-modeste.vercel.app<br />
+    Message recu via le formulaire de contact<br />
     Pour repondre, cliquez sur "Repondre" - votre reponse ira directement a ${email}
   </p>
 </div>
@@ -58,12 +68,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         if (error) {
             console.error('Resend error:', error);
-            return res.status(500).json({ error: "Erreur lors de l'envoi. Reessayez plus tard." });
+            return res.status(500).json({ error: "Erreur lors de l'envoi de l'email via Resend." });
         }
 
         return res.status(200).json({ success: true });
     } catch (err) {
         console.error('Contact handler error:', err);
-        return res.status(500).json({ error: 'Erreur interne du serveur.' });
+        return res.status(500).json({ error: 'Erreur interne du serveur (Exception).' });
     }
 }

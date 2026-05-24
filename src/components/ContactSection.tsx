@@ -44,8 +44,7 @@ const ContactSection = () => {
       if (contentType && contentType.includes("application/json")) {
         data = await res.json();
       } else {
-        // En mode dev (Vite sans Vercel), la route /api n'existe pas
-        throw new Error("L'API de contact n'est pas disponible localement. Utilisez 'vercel dev' ou testez sur le site en ligne.");
+        throw new Error("L'API a répondu avec un format incorrect. (Erreur serveur 500 ou configuration Vercel)");
       }
 
       if (!res.ok) {
