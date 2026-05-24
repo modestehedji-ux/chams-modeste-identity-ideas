@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -7,38 +7,38 @@ const offres = [
     num: "01",
     tag: "Recherche & Conseil",
     title: "Expertise juridique\n& en sciences humaines",
-    desc: "J'apporte une lecture éthique et juridique des enjeux liés à l'identité africaine, à la démocratie, à la justice et aux transformations socio-culturelles à l'ère numérique. Idéal pour les institutions, ONG, think tanks et milieux académiques.",
+    desc: "J'apporte une lecture Ã©thique et juridique des enjeux liÃ©s Ã  l'identitÃ© africaine, Ã  la dÃ©mocratie, Ã  la justice et aux transformations socio-culturelles Ã  l'Ã¨re numÃ©rique. IdÃ©al pour les institutions, ONG, think tanks et milieux acadÃ©miques.",
     details: [
-      "Rédaction d'analyses, notes de position et rapports thématiques",
-      "Participation à des colloques, panels et conférences",
-      "Contributions académiques et co-publications",
+      "RÃ©daction d'analyses, notes de position et rapports thÃ©matiques",
+      "Participation Ã  des colloques, panels et confÃ©rences",
+      "Contributions acadÃ©miques et co-publications",
       "Conseil sur les enjeux IA & droits humains en Afrique",
       "Formations et ateliers sur mesure",
     ],
   },
   {
     num: "02",
-    tag: "Numérique & IA",
-    title: "Transition numérique\n& intelligence artificielle",
-    desc: "Je conçois et déploie des solutions numériques adaptées aux besoins des individus et des structures : sites web professionnels, automatisations intelligentes et intégration d'outils IA pour gagner en efficacité et en visibilité.",
+    tag: "NumÃ©rique & IA",
+    title: "Transition numÃ©rique\n& intelligence artificielle",
+    desc: "Je conÃ§ois et dÃ©ploie des solutions numÃ©riques adaptÃ©es aux besoins des individus et des structures : sites web professionnels, automatisations intelligentes et intÃ©gration d'outils IA pour gagner en efficacitÃ© et en visibilitÃ©.",
     details: [
-      "Création de sites web (portfolio, vitrine, blog)",
-      "Automatisation de tâches répétitives (emails, reporting, flux)",
-      "Intégration d'outils IA dans les processus existants",
-      "Formation des équipes aux usages de l'IA",
-      "Audit et recommandations de transformation numérique",
+      "CrÃ©ation de sites web (portfolio, vitrine, blog)",
+      "Automatisation de tÃ¢ches rÃ©pÃ©titives (emails, reporting, flux)",
+      "IntÃ©gration d'outils IA dans les processus existants",
+      "Formation des Ã©quipes aux usages de l'IA",
+      "Audit et recommandations de transformation numÃ©rique",
     ],
   },
   {
     num: "03",
-    tag: "Création de contenu",
-    title: "Écriture, vidéo\n& storytelling",
-    desc: "J'explore et transmets les grandes questions qui traversent nos sociétés — par l'écrit et par l'image. Articles de fond, scripts, contenus vidéo : je mets la narration au service d'idées qui méritent d'être entendues.",
+    tag: "CrÃ©ation de contenu",
+    title: "Ã‰criture, vidÃ©o\n& storytelling",
+    desc: "J'explore et transmets les grandes questions qui traversent nos sociÃ©tÃ©s â€” par l'Ã©crit et par l'image. Articles de fond, scripts, contenus vidÃ©o : je mets la narration au service d'idÃ©es qui mÃ©ritent d'Ãªtre entendues.",
     details: [
-      "Rédaction d'articles, essais et tribunes",
-      "Création et gestion de contenus éditoriaux",
-      "Scripts et narration pour contenus vidéo",
-      "Conception et animation de blogs thématiques",
+      "RÃ©daction d'articles, essais et tribunes",
+      "CrÃ©ation et gestion de contenus Ã©ditoriaux",
+      "Scripts et narration pour contenus vidÃ©o",
+      "Conception et animation de blogs thÃ©matiques",
       "Ghost-writing sur des sujets philosophiques & sociaux",
     ],
   },
@@ -46,27 +46,27 @@ const offres = [
 
 const profils = [
   {
-    icon: "🏛️",
+    icon: "ðŸ›ï¸",
     title: "Institutions & ONG",
-    desc: "Vous travaillez sur des questions de droits humains, de gouvernance ou de développement en Afrique. J'apporte une expertise juridique et en sciences humaines pour nourrir vos travaux et publications.",
+    desc: "Vous travaillez sur des questions de droits humains, de gouvernance ou de dÃ©veloppement en Afrique. J'apporte une expertise juridique et en sciences humaines pour nourrir vos travaux et publications.",
   },
   {
-    icon: "🔬",
-    title: "Chercheurs & Académiques",
-    desc: "Vous menez des recherches sur les mutations africaines contemporaines. Je peux contribuer comme co-auteur, intervenant ou expert sur les croisements entre éthique, IA et identité.",
+    icon: "ðŸ”¬",
+    title: "Chercheurs & AcadÃ©miques",
+    desc: "Vous menez des recherches sur les mutations africaines contemporaines. Je peux contribuer comme co-auteur, intervenant ou expert sur les croisements entre Ã©thique, IA et identitÃ©.",
   },
   {
-    icon: "🚀",
+    icon: "ðŸš€",
     title: "Porteurs de projets",
-    desc: "Vous souhaitez construire votre présence numérique, automatiser vos processus ou intégrer l'IA dans votre activité. Je vous accompagne de la stratégie à l'exécution, depuis Cotonou.",
+    desc: "Vous souhaitez construire votre prÃ©sence numÃ©rique, automatiser vos processus ou intÃ©grer l'IA dans votre activitÃ©. Je vous accompagne de la stratÃ©gie Ã  l'exÃ©cution, depuis Cotonou.",
   },
 ];
 
 const etapes = [
-  { num: "01", title: "Prise de contact", desc: "Vous m'écrivez en décrivant votre besoin. Je réponds sous 48h." },
-  { num: "02", title: "Échange exploratoire", desc: "Un appel ou échange écrit pour cerner vos attentes et valider l'adéquation." },
-  { num: "03", title: "Proposition", desc: "Je vous soumets une proposition détaillée : périmètre, modalités, délais." },
-  { num: "04", title: "Collaboration", desc: "Nous travaillons ensemble avec des points réguliers et une communication fluide." },
+  { num: "01", title: "Prise de contact", desc: "Vous m'Ã©crivez en dÃ©crivant votre besoin. Je rÃ©ponds sous 48h." },
+  { num: "02", title: "Ã‰change exploratoire", desc: "Un appel ou Ã©change Ã©crit pour cerner vos attentes et valider l'adÃ©quation." },
+  { num: "03", title: "Proposition", desc: "Je vous soumets une proposition dÃ©taillÃ©e : pÃ©rimÃ¨tre, modalitÃ©s, dÃ©lais." },
+  { num: "04", title: "Collaboration", desc: "Nous travaillons ensemble avec des points rÃ©guliers et une communication fluide." },
 ];
 
 const ServicesPage = () => {
@@ -95,17 +95,17 @@ const ServicesPage = () => {
             Services
           </span>
           <h1 className="font-heading" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 700, color: "#1a1710", lineHeight: 1.05 }}>
-            Pensée rigoureuse.<br />
+            PensÃ©e rigoureuse.<br />
             <em style={{ color: "#b8922a", fontStyle: "italic" }}>Impact concret.</em>
           </h1>
           <div style={{ width: "40px", height: "2px", background: "#b8922a", margin: "2rem 0" }} />
         </div>
         <div>
           <p className="font-body" style={{ fontSize: "0.95rem", color: "#444", lineHeight: 1.9, marginBottom: "1rem" }}>
-            <strong style={{ color: "#1a1710" }}>Ce que je propose n'est pas un simple service.</strong> C'est une collaboration ancrée dans la rigueur académique, la connaissance du terrain africain et une maîtrise des outils numériques contemporains.
+            <strong style={{ color: "#1a1710" }}>Ce que je propose n'est pas un simple service.</strong> C'est une collaboration ancrÃ©e dans la rigueur acadÃ©mique, la connaissance du terrain africain et une maÃ®trise des outils numÃ©riques contemporains.
           </p>
           <p className="font-body" style={{ fontSize: "0.92rem", color: "#555", lineHeight: 1.85, marginBottom: "2rem" }}>
-            Que vous soyez une institution en quête d'expertise, un chercheur en besoin d'accompagnement, ou un porteur de projet cherchant à intégrer l'IA dans ses processus — je peux vous aider à franchir ce cap.
+            Que vous soyez une institution en quÃªte d'expertise, un chercheur en besoin d'accompagnement, ou un porteur de projet cherchant Ã  intÃ©grer l'IA dans ses processus â€” je peux vous aider Ã  franchir ce cap.
           </p>
           <Link
             to="/contact"
@@ -114,7 +114,7 @@ const ServicesPage = () => {
             onMouseEnter={e => (e.currentTarget.style.background = "#8a6a1a")}
             onMouseLeave={e => (e.currentTarget.style.background = "#b8922a")}
           >
-            Ecrire à Chams Modeste HEDJI
+            Ecrire Ã  Chams Modeste HEDJI
           </Link>
         </div>
       </div>
@@ -182,7 +182,7 @@ const ServicesPage = () => {
             Pour qui ?
           </span>
           <h2 className="font-heading" style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", color: "white", fontWeight: 700, marginBottom: "2.5rem", lineHeight: 1.2 }}>
-            Des collaborations<br />à <em style={{ color: "#b8922a", fontStyle: "italic" }}>haute valeur ajoutée</em>
+            Des collaborations<br />Ã  <em style={{ color: "#b8922a", fontStyle: "italic" }}>haute valeur ajoutÃ©e</em>
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.5rem" }}>
             {profils.map((p) => (
@@ -205,7 +205,7 @@ const ServicesPage = () => {
       <section style={{ padding: "5rem 4rem" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <span className="font-body" style={{ fontSize: "0.68rem", letterSpacing: "3px", color: "#b8922a", textTransform: "uppercase", fontWeight: 600, display: "block", marginBottom: "0.8rem" }}>
-            Comment ça se passe
+            Comment Ã§a se passe
           </span>
           <h2 className="font-heading" style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700, marginBottom: "3rem", color: "#1a1710" }}>
             Un processus simple,<br />
@@ -227,22 +227,22 @@ const ServicesPage = () => {
       <section style={{ background: "#f5edd8", padding: "5rem 4rem", textAlign: "center" }}>
         <div style={{ maxWidth: "620px", margin: "0 auto" }}>
           <h2 className="font-heading" style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)", fontWeight: 700, color: "#1a1710", marginBottom: "1rem", lineHeight: 1.2 }}>
-            Prêt à<br /><em style={{ color: "#8a6a1a", fontStyle: "italic" }}>travailler ensemble ?</em>
+            PrÃªt Ã <br /><em style={{ color: "#8a6a1a", fontStyle: "italic" }}>travailler ensemble ?</em>
           </h2>
           <p className="font-body" style={{ fontSize: "0.95rem", color: "#6b6560", lineHeight: 1.8, marginBottom: "2.5rem" }}>
-            Chaque projet est unique. Décrivez-moi votre besoin — même de manière vague — et nous trouverons ensemble la meilleure façon de collaborer.
+            Chaque projet est unique. DÃ©crivez-moi votre besoin â€” mÃªme de maniÃ¨re vague â€” et nous trouverons ensemble la meilleure faÃ§on de collaborer.
           </p>
           <a
-            href="mailto:modestehedji@gmail.com"
+            href="/#contact"
             className="font-body"
             style={{ background: "#b8922a", color: "white", padding: "0.85rem 2rem", fontSize: "0.72rem", letterSpacing: "2px", textTransform: "uppercase", fontWeight: 600, textDecoration: "none", display: "inline-block", transition: "background 0.2s" }}
             onMouseEnter={e => (e.currentTarget.style.background = "#8a6a1a")}
             onMouseLeave={e => (e.currentTarget.style.background = "#b8922a")}
           >
-            Écrire à Chams Modeste HEDJI
+            Ã‰crire Ã  Chams Modeste HEDJI
           </a>
           <div style={{ display: "flex", justifyContent: "center", gap: "2rem", marginTop: "1.5rem", flexWrap: "wrap" }}>
-            {["modestehedji@gmail.com", "Cotonou, Bénin", "Réponse sous 48h"].map((item) => (
+            {["modestehedji@gmail.com", "Cotonou, BÃ©nin", "RÃ©ponse sous 48h"].map((item) => (
               <div key={item} className="font-body" style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.83rem", color: "#6b6560" }}>
                 <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "#b8922a", display: "inline-block" }} />
                 {item}
@@ -266,3 +266,4 @@ const ServicesPage = () => {
 };
 
 export default ServicesPage;
+

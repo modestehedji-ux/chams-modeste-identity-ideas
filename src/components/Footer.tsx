@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 import { Mail } from "lucide-react";
 import { useI18n, uiStrings } from "@/hooks/use-i18n";
 
@@ -7,7 +7,7 @@ const Footer = () => {
 
   const quickLinks = [
     { label: "Accueil", href: "/" },
-    { label: "À propos", href: "/#apropos" },
+    { label: "Ã€ propos", href: "/#apropos" },
     { label: "Parcours", href: "/#parcours" },
     { label: "Publications", href: "/#publications" },
     { label: "Services", href: "/services" },
@@ -34,12 +34,12 @@ const Footer = () => {
             Chams Modeste <span style={{ color: "#b8922a" }}>HEDJI</span>
           </p>
           <p className="font-body" style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.8, marginBottom: "1rem" }}>
-            SCIENCES HUMAINES ET SOCIALES · CRÉATION NUMÉRIQUE
+            SCIENCES HUMAINES ET SOCIALES Â· CRÃ‰ATION NUMÃ‰RIQUE
           </p>
           <div className="font-body" style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.35)", lineHeight: 2 }}>
             <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
               <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "#b8922a", display: "inline-block" }} />
-              Cotonou, Bénin
+              Cotonou, BÃ©nin
             </span>
             <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
               <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "#b8922a", display: "inline-block" }} />
@@ -111,7 +111,7 @@ const Footer = () => {
               LinkedIn
             </a>
             <a
-              href="mailto:modestehedji@gmail.com"
+              href="/#contact"
               className="font-body"
               style={{ display: "flex", alignItems: "center", gap: "0.6rem", fontSize: "0.84rem", color: "rgba(255,255,255,0.45)", textDecoration: "none", transition: "color 0.2s" }}
               onMouseEnter={e => (e.currentTarget.style.color = "#b8922a")}
@@ -140,11 +140,11 @@ const Footer = () => {
         className="footer-bottom"
       >
         <p className="font-body" style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.25)" }}>
-          © {new Date().getFullYear()} Chams Modeste{" "}
+          Â© {new Date().getFullYear()} Chams Modeste{" "}
           <Link to="/" style={{ color: "#b8922a", textDecoration: "none" }}>HEDJI</Link>. {uiStrings["footer.rights"][lang]}
         </p>
         <p className="font-body" style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.25)" }}>
-          Conçu par Chams Modeste HEDJI
+          ConÃ§u par Chams Modeste HEDJI
         </p>
       </div>
 
@@ -160,3 +160,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
